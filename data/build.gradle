@@ -1,4 +1,7 @@
+import org.ajoberstar.grgit.Grgit
+
 apply plugin: 'com.android.library'
+apply plugin: 'org.ajoberstar.release-opinion'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -29,12 +32,10 @@ android {
         abortOnError false;
         disable 'InvalidPackage' // Some libraries have issues with this
     }
+}
 
-    sourceSets {
-        androidTest {
-            setRoot('src/test')
-        }
-    }
+release {
+    grgit = Grgit.open(dir: '.')
 }
 
 dependencies {

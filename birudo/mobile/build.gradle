@@ -1,9 +1,5 @@
 import org.ajoberstar.grgit.Grgit
 
-plugins {
-    id "org.ajoberstar.release-opinion" version "1.1.0-milestone.1"
-}
-
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
@@ -71,7 +67,6 @@ android {
 
     lintOptions {
         abortOnError = false
-        lintConfig file("src/main/lint.xml")
     }
 
     dexOptions {
@@ -109,7 +104,11 @@ release {
 }
 
 task building() {
-    allprojects.collect { proj -> ['clean', 'build'].collect { name -> proj.tasks.getByName(name) }.flatten()}
+    return ['clean', 'build'].collect { task ->
+        subprojects.collect { project ->
+            ":" + project.name + ":" + task
+        }.flatten()
+    }.flatten()
 }
 
 
@@ -119,7 +118,7 @@ task releaseApp(dependsOn: [allprojects.collect { proj -> ['clean', 'build'].col
         println "${android.defaultConfig.versionName} released"
     }
 }
-tasks.release.dependsOn 'building', 'publishRelease'
+tasks.release.dependsOn 'build','publishRelease'
 
 if (project.hasProperty('releaseKeyStore') &&
         project.hasProperty('releaseKeyPassword') &&
@@ -140,9 +139,6 @@ dependencies {
     def core = project(':core')
     def data = project(':data')
 
-    compile core
-    compile data
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     wearApp project(':birudo:wear')
@@ -156,5 +152,8 @@ dependencies {
     compile 'net.danlew:android.joda:2.7.1'
     compile 'com.nispok:snackbar:2.9.0'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
+
+    compile core
+    compile data
 
 }
