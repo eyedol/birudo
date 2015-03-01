@@ -3,13 +3,14 @@
 buildscript {
     repositories {
         jcenter()
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.2'
+        classpath 'com.android.tools.build:gradle:1.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
         classpath 'com.github.triplet.gradle:play-publisher:1.0.2'
-        classpath 'org.ajoberstar:gradle-git:1.0.0'
+        classpath 'org.ajoberstar:grgit:1.1.0-milestone.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,13 +18,19 @@ buildscript {
 }
 
 allprojects {
-    repositories {
-        jcenter()
+
+    ext {
+        androidBuildToolsVersion = "21.1.2"
+        androidMinSdkVersion = 14
+        androidTargetSdkVersion = 21
+        androidCompileSdkVersion = 21
+        androidApplicationId = 'org.addhen.birudo'
+        androidVersionCode = 1
+        androidVersionName = "1.0"
+        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-        }
+    repositories {
+        jcenter()
     }
 }

@@ -10,7 +10,7 @@
     <permission
             android:name="org.addhen.birudo.permission.C2D_MESSAGE"
             android:protectionLevel="signature"/>
-    <uses-permission android:name="org.addhen.birudorogu.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="org.addhen.birudo.permission.C2D_MESSAGE"/>
     <application
             android:name="org.addhen.birudo.BirudoroguApplication"
             android:allowBackup="true"
@@ -51,7 +51,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
-                <category android:name="org.addhen.birudorogu"/>
+                <category android:name="org.addhen.birudo"/>
             </intent-filter>
         </receiver>
         <service

@@ -1,14 +1,15 @@
 import org.ajoberstar.grgit.Grgit
 
+plugins {
+    id "org.ajoberstar.release-opinion" version "1.1.0-milestone.1"
+}
+
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.ajoberstar.release-opinion'
 apply plugin: 'play'
 
-def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
-
-def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
 
 def isTravis = "true".equals(System.getenv("TRAVIS"))
 
@@ -33,7 +34,7 @@ def buildVersionCode() {
 
 def readWhatsNewFile(filename) {
     File file = new File('birudo/mobile/src/main/play/en-US/' + filename);
-    return file.exists() ? file.text + '\n\n' : new File('app/src/main/play/en-US/whatsnew').text;
+    return file.exists() ? file.text : new File('birudo/mobile/src/main/play/en-US/whatsnew').text;
 }
 
 def trackProperty() {
@@ -41,15 +42,18 @@ def trackProperty() {
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
-        applicationId "org.addhen.birudo"
-        minSdkVersion 14
-        targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        applicationId globalConfiguration.getAt("androidApplicationId")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
+        testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
     }
 
     signingConfigs {
@@ -58,11 +62,28 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.releaseSign
         }
+    }
+
+    lintOptions {
+        abortOnError = false
+        lintConfig file("src/main/lint.xml")
+    }
+
+    dexOptions {
+        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+        preDexLibraries = preDexEnabled && !isTravis
+    }
+
+    packagingOptions {
+        exclude 'LICENSE'
+        exclude 'NOTICE'
+        exclude 'asm-license.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 }
 
@@ -76,7 +97,7 @@ play {
 release {
     grgit = Grgit.open(dir: '.')
 
-    def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
+   def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
 
     android.defaultConfig.versionName = project.version.toString()
 
@@ -86,6 +107,7 @@ release {
         generateMessage = { version -> "Release of $version.version $tagMessage" }
     }
 }
+
 
 task releaseApp(dependsOn: ['clean', 'assemble', 'release', 'publishRelease']) {
     description 'Release a new version of application, increase version and create tag'
@@ -112,8 +134,14 @@ if (project.hasProperty('releaseKeyStore') &&
 dependencies {
     def core = project(':core')
     def data = project(':data')
+
+    compile core
+    compile data
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     wearApp project(':birudo:wear')
+
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.android.support:cardview-v7:21.0.3'
@@ -123,6 +151,5 @@ dependencies {
     compile 'net.danlew:android.joda:2.7.1'
     compile 'com.nispok:snackbar:2.9.0'
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
-    compile core
-    compile data
+
 }

@@ -18,7 +18,7 @@ package org.addhen.birudo.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.addhen.birudo.core.entity.Entity;
+import org.addhen.birudo.core.Entity;
 
 import java.util.List;
 

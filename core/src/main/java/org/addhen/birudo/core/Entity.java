@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.addhen.birudo.core.entity;
+package org.addhen.birudo.core;
 
 /**
  * @author Henry Addo

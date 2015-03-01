@@ -16,6 +16,8 @@
 
 package org.addhen.birudo.core.entity;
 
+import org.addhen.birudo.core.Entity;
+
 public class JenkinsBuildInfo extends Entity {
 
     private String mUserName;

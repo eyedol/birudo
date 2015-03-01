@@ -16,7 +16,6 @@
 
 package org.addhen.birudo.data.repository;
 
-
 import org.addhen.birudo.data.database.JenkinsBuildInfoDatabase;
 import org.addhen.birudo.data.database.JenkinsBuildInfoDatabaseHelper;
 import org.addhen.birudo.data.entity.JenkinsBuildInfoEntity;

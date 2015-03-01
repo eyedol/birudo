@@ -16,6 +16,8 @@
 
 package org.addhen.birudo.core.entity;
 
+import org.addhen.birudo.core.Entity;
+
 public class GcmRegistrationStatus extends Entity {
     private int mStatusCode;
     private boolean mStatus;

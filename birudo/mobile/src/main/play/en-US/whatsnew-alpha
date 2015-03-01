@@ -1,4 +1,3 @@
-- Ability to manage deployments.
-- Post listing.
-- Ability to login to different deployments.
-- Ability to switch active deployment's users.
+- Ability to manage build notifications
+- Sends notification status to android wear
+- Jenkins configuration management.

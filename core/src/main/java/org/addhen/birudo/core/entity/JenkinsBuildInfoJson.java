@@ -16,6 +16,8 @@
 
 package org.addhen.birudo.core.entity;
 
+import org.addhen.birudo.core.Entity;
+
 import java.util.List;
 
 public class JenkinsBuildInfoJson extends Entity {

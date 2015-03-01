@@ -16,6 +16,8 @@
 
 package org.addhen.birudo.core.entity;
 
+import org.addhen.birudo.core.Entity;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
