@@ -33,8 +33,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.NotificationCompat;
 
+import javax.inject.Inject;
+
 public class BuildStateNotification {
 
+    @Inject
     public void setNotification(Context context, @Vibrate BooleanPreference vibrate, @Sound BooleanPreference sound, String message,
             JenkinsBuildInfoJsonModel.Result result, long duration) {
 
