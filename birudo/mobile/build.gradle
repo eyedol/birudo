@@ -97,7 +97,13 @@ play {
 release {
     grgit = Grgit.open(dir: '.')
 
-   def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
+    /*releaseTasks = ['clean', 'build'].collect { task ->
+        subprojects.collect { project ->
+            ":" + project.name + ":" + task
+        }.flatten()
+    }.flatten()*/
+
+    def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
 
     android.defaultConfig.versionName = project.version.toString()
 
@@ -108,6 +114,10 @@ release {
     }
 }
 
+task building() {
+    allprojects.collect { proj -> ['clean', 'build'].collect { name -> proj.tasks.getByName(name) }.flatten()}
+}
+
 
 task releaseApp(dependsOn: ['clean', 'assemble', 'release', 'publishRelease']) {
     description 'Release a new version of application, increase version and create tag'
@@ -115,6 +125,7 @@ task releaseApp(dependsOn: ['clean', 'assemble', 'release', 'publishRelease']) {
         println "${android.defaultConfig.versionName} released"
     }
 }
+tasks.release.dependsOn 'building'
 
 if (project.hasProperty('releaseKeyStore') &&
         project.hasProperty('releaseKeyPassword') &&
