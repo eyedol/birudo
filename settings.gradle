@@ -1,0 +1,2 @@
+include ':birudo:mobile', ':birudo:tv', ':birudo:wear', ':core', ':data', ':mobile'
+project(':mobile').projectDir = new File('birudo/mobile')

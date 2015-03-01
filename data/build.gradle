@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 21
+    }
+    
+    lintOptions {
+        abortOnError false;
+        disable 'InvalidPackage' // Some libraries have issues with this
+        disable 'OldTargetApi' // Due to Robolectric that modifies the manifest when running tests
+    }
+
+    sourceSets {
+        androidTest {
+            setRoot('src/test')
+        }
+    }
+}
+
+dependencies {
+    def core = project(':core')
+    compile 'javax.inject:javax.inject:1@jar'
+    compile 'nl.qbusict:cupboard:2.1.1'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.jakewharton.timber:timber:2.4.+'
+    compile 'com.google.android.gms:play-services-base:6.5.87'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+    //project dependencies
+    compile core
+
+}
+

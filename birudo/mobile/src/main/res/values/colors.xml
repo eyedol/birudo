@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (c) 2010 Ushahidi Inc All rights reserved Contact: team@ushahidi.com 
+	Website: http://www.ushahidi.com GNU Lesser General Public License Usage 
+	This file may be used under the terms of the GNU Lesser General Public License 
+	version 3 as published by the Free Software Foundation and appearing in the 
+	file LICENSE.LGPL included in the packaging of this file. Please review the 
+	following information to ensure the GNU Lesser General Public License version 
+	3 requirements will be met: http://www.gnu.org/licenses/lgpl.html. If you 
+	have questions regarding the use of this file, please contact Ushahidi developers 
+	at team@ushahidi.com.
+-->
+<resources>
+    <color name="failed">#F44336</color>
+    <color name="success">#4CAF50</color>
+    <color name="console">#000000</color>
+    <color name="console_text_color">#FF5722</color>
+    <color name="activated_color">#20000000</color>
+    <color name="pressed_color">#2033b5e5</color>
+
+    <color name="theme_primary">#795548</color>
+    <color name="theme_primary_dark">#5D4037</color>
+    <color name="primary_light">#D7CCC8</color>
+    <color name="theme_accent">#8BC34A</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="actionbar_icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+</resources>

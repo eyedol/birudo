@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Notification -->
+    <PreferenceCategory android:title="@string/notification">
+        <CheckBoxPreference
+                android:key="notification_vibrate_key"
+                android:defaultValue="true"
+                android:title="@string/vibrate"/>
+        <CheckBoxPreference
+                android:key="notification_sound_key"
+                android:defaultValue="true"
+                android:title="@string/sound"/>
+    </PreferenceCategory>
+
+    <!-- Configuration -->
+    <PreferenceCategory android:title="@string/configuration">
+    <Preference
+            android:key="scan_qr_code"
+            android:summary="@string/scan_qr_code_hint"
+            android:title="@string/scan_qr_code_hint"/>
+    <PreferenceScreen
+            android:key="server_prefs"
+            android:title="@string/jenkins_server_configuration">
+        <intent
+                android:action="android.intent.action.VIEW"
+                android:data="preferences://jenkins_server"
+                android:targetClass="org.addhen.birudo.ui.activity.SettingsActivity"
+                android:targetPackage="org.addhen.birudo"/>
+    </PreferenceScreen>
+    <Preference
+            android:key="clear_settings"
+            android:title="@string/clear_settings"/>
+    </PreferenceCategory>
+
+
+
+    <!-- about -->
+    <PreferenceCategory android:title="@string/about">
+        <Preference
+                android:key="about_text_key"
+                android:summary="v1.0.1"
+                android:title="@string/app_name"/>
+    </PreferenceCategory>
+</PreferenceScreen>
