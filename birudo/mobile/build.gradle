@@ -113,7 +113,7 @@ task building() {
 }
 
 
-task releaseApp(dependsOn: ['clean', 'assemble', 'release', 'publishRelease']) {
+task releaseApp(dependsOn: [allprojects.collect { proj -> ['clean', 'build'].collect { name -> proj.tasks.getByName(name) }.flatten()}, 'publishRelease', ]) {
     description 'Release a new version of application, increase version and create tag'
     doLast {
         println "${android.defaultConfig.versionName} released"
