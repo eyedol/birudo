@@ -34,7 +34,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.NotificationCompat;
 
 public class BuildStateNotification {
-    
+
     public void setNotification(Context context, @Vibrate BooleanPreference vibrate, @Sound BooleanPreference sound, String message,
             JenkinsBuildInfoJsonModel.Result result, long duration) {
 
