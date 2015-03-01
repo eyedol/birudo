@@ -16,7 +16,7 @@ def isTravis = "true".equals(System.getenv("TRAVIS"))
 def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
 def getGooglePlaystoreServiceAccountEmail() {
-    return project.hasProperty('gPlaystoreServiceAccountEmailAddress') ? gPlaystoreServiceAccountEmailAddress : ''
+    return project.hasProperty('gPlaystoreServiceAccountEmailAddress') ? gPlaystoreServiceAccountEmailAddress: ''
 }
 
 def getGooglePlaystoreServicepk12File() {
