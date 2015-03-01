@@ -110,7 +110,7 @@ release {
     android.defaultConfig.versionCode = buildVersionCode().toInteger()
 
     tagStrategy {
-        generateMessage = { version -> "Release of $version.version \n\n $tagMessage" }
+        generateMessage = { version -> "\n\n $tagMessage" }
     }
 }
 
