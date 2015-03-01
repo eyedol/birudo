@@ -119,7 +119,7 @@ task releaseApp(dependsOn: [allprojects.collect { proj -> ['clean', 'build'].col
         println "${android.defaultConfig.versionName} released"
     }
 }
-tasks.release.dependsOn 'building'
+tasks.release.dependsOn 'clean', 'build', 'publishRelease'
 
 if (project.hasProperty('releaseKeyStore') &&
         project.hasProperty('releaseKeyPassword') &&

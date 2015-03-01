@@ -14,6 +14,6 @@ TRACK=$3
 
 echo "Releasing..."
 
-./gradlew clean releaseApp -Prelease.scope=$SCOPE -Prelease.stage=$STAGE -PuploadTrack=$TRACK
+./gradlew release -Prelease.scope=$SCOPE -Prelease.stage=$STAGE -PuploadTrack=$TRACK
 
 echo "Done!"
