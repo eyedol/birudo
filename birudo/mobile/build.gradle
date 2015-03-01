@@ -97,12 +97,6 @@ play {
 release {
     grgit = Grgit.open(dir: '.')
 
-    /*releaseTasks = ['clean', 'build'].collect { task ->
-        subprojects.collect { project ->
-            ":" + project.name + ":" + task
-        }.flatten()
-    }.flatten()*/
-
     def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
 
     android.defaultConfig.versionName = project.version.toString()
@@ -110,7 +104,7 @@ release {
     android.defaultConfig.versionCode = buildVersionCode().toInteger()
 
     tagStrategy {
-        generateMessage = { version -> "\n\nRelease of $version.version \n\n $tagMessage" }
+        generateMessage = { version -> "\n\nRelease of $version.version\n$tagMessage" }
     }
 }
 
