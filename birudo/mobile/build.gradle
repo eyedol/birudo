@@ -77,7 +77,7 @@ android {
                 output.outputFile = file("$project.buildDir/apk/" + newName);
                 if (output.zipAlign) {
                     output.zipAlign.outputFile =
-                            file("$project.buildDir/apk/" + newName.replace("-aligned", ""));
+                            file("$project.buildDir/apk/" + newName.replace("-unaligned", ""));
                 }
             }
         }
