@@ -60,11 +60,14 @@ public class RetrieveJenkinsBuildInfo {
         public void onBuildInfoFetched(JenkinsBuildInfoJson buildInfo) {
             JenkinsBuildInfoJsonModel model = mJenkinsBuildInfoModelMapper.map(buildInfo);
 
-            new BuildStateNotification()
-                    .setNotification(mContext, mVibrate, mSound, model.getDisplayName(), model.getResult(),
-                            model.getDuration());
+            if(model !=null) {
+                new BuildStateNotification()
+                        .setNotification(mContext, mVibrate, mSound, model.getDisplayName(),
+                                model.getResult(),
+                                model.getDuration());
 
-            mBuildState.onBuildStatusReceived(model);
+                mBuildState.onBuildStatusReceived(model);
+            }
         }
 
         @Override

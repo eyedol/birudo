@@ -1,9 +1,10 @@
 import org.ajoberstar.grgit.Grgit
+import org.ajoberstar.gradle.git.release.opinion.Strategies
 
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.ajoberstar.release-opinion'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'play'
 
 
@@ -109,9 +110,11 @@ play {
 }
 
 release {
-    grgit = Grgit.open('.')
+    grgit = Grgit.open(dir: '.')
 
     def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
+
+    versionStrategy Strategies.PRE_RELEASE_ALPHA_BETA
 
     android.defaultConfig.versionName = project.version.toString()
 
