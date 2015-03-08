@@ -18,7 +18,7 @@
     <Preference
             android:key="scan_qr_code"
             android:summary="@string/scan_qr_code_hint"
-            android:title="@string/scan_qr_code_hint"/>
+            android:title="@string/scan_qr_code_title"/>
     <PreferenceScreen
             android:key="server_prefs"
             android:title="@string/jenkins_server_configuration">
