@@ -1,9 +1,10 @@
 Birudo
 ======
 Birudo is a mobile notification for the Jenkins CI. This allows you to receive status of your Jenkins
-builds on your Android devices be it mobile, wearables or Tv.
+builds on your Android devices be it mobile, wearables or Tv. Click [here][1] to read how to configure the
+application.
 
-This app was highly inspired by [BuildWatch][1]
+This app was highly inspired by [BuildWatch][2]
 License
 -------
     Copyright 2015 Henry Addo
@@ -20,4 +21,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[1]: http://buildwatch.org/
+[1]: https://github.com/eyedol/birudo/blob/master/configure.md
+[2]: http://buildwatch.org/
