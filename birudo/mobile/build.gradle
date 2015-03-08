@@ -110,11 +110,11 @@ play {
 }
 
 release {
-    grgit = Grgit.open(dir: '.')
+    grgit = Grgit.open('.')
 
     def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
 
-    versionStrategy Strategies.PRE_RELEASE_ALPHA_BETA
+    versionStrategy  Strategies.PRE_RELEASE.copyWith(stages: ['alpha', 'beta', 'rc'] as SortedSet)
 
     android.defaultConfig.versionName = project.version.toString()
 
