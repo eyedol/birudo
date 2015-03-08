@@ -90,39 +90,6 @@ public class MainActivity extends BaseActivity {
         super.onPause();
     }
 
-
-   /* @Subscribe
-    public void onJenkinsBuildInfoFetched(AppState.BuildStateEvent event) {
-        final JenkinsBuildInfoModel buildInfoModel = event.getJenkinsBuildInfoModel();
-
-        if (buildInfoModel != null) {
-            mBuildInfoLayout.setVisibility(View.VISIBLE);
-            mNoBuildInfoLayout.setVisibility(View.GONE);
-
-            if (buildInfoModel.getResult() == JenkinsBuildInfoModel.Result.SUCCESS) {
-                mStatus.setBackground(
-                        getContext().getResources().getDrawable(R.drawable.success_notification_bg));
-            }
-
-            mDisplayName.setText(buildInfoModel.getDisplayName());
-
-            mBuildStatus.setText(getString(R.string.build_status, buildInfoModel.getResult().name(),
-                    AppUtil.formattedDuration(buildInfoModel.getDuration())));
-
-            if(buildInfoModel.getActions() != null && buildInfoModel.getActions().size() > 0) {
-               String by = buildInfoModel.getActions().get(1).getCauses().get(0).getAddr() != null ?
-                       buildInfoModel.getActions().get(1).getCauses().get(0).getAddr()
-                        : buildInfoModel.getActions().get(1).getCauses().get(0).getUserId();
-
-                mStartedBy.setText(getString(R.string.started_by, by));
-            }
-
-            mUrl = buildInfoModel.getUrl();
-
-
-        }
-    }*/
-
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {

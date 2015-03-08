@@ -101,12 +101,6 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
             mListJenkinsBuildInfoPresenter.init();
         }
 
-        if (mRetrieveJenkinsBuildInfo != null) {
-            mRetrieveJenkinsBuildInfo.execute(
-                    "Ushahidi-Platform-Android build #151: SUCCESS in 2 min 49 sec: http://qa.ushahididev.com/job/Ushahidi-Platform-Android/144/");
-
-        }
-
         mModelList = new ArrayList<>();
     }
 
