@@ -127,6 +127,12 @@ release {
 
 tasks.release.dependsOn(['build', 'publishRelease'])
 
+// Build launch app from command line
+task runApp(type: Exec, dependsOn:['build','installDebug']) {
+    //Linux command to launch the PostActivity when debug app is installed
+    commandLine 'adb', 'shell', 'am', 'start', '-n', 'org.addhen.birudo/.ui.activity.MainActivity'
+}
+
 if (project.hasProperty('releaseKeyStore') &&
         project.hasProperty('releaseKeyPassword') &&
         project.hasProperty('releaseKeyStorePassword') &&
