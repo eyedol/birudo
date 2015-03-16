@@ -86,10 +86,10 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
         @Override
         public void onGcmTokenRegistered(GcmRegistrationStatus status) {
             if (!status.isStatus()) {
-                mView.showMessage(mView.getContext()
+                mView.showMessage(mView.getAppContext()
                         .getString(R.string.registering_failed, status.getStatusCode()));
             } else {
-                mView.showMessage(mView.getContext().getString(R.string.registering_success));
+                mView.showMessage(mView.getAppContext().getString(R.string.registering_success));
             }
         }
 
@@ -236,7 +236,7 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
     }
 
     private void showErrorMessage(ErrorWrap errorWrap) {
-        String errorMessage = ErrorMessageFactory.create(mView.getContext(),
+        String errorMessage = ErrorMessageFactory.create(mView.getAppContext(),
                 errorWrap.getException());
         mView.showMessage(errorMessage);
     }

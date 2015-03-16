@@ -23,5 +23,5 @@ import android.content.Context;
  */
 public interface IView {
 
-    public Context getContext();
+    public Context getAppContext();
 }

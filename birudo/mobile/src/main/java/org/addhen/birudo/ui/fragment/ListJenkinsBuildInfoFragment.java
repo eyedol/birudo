@@ -44,14 +44,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.InjectView;
-import timber.log.Timber;
 
 public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<JenkinsBuildInfoModel,
         JenkinsBuildInfoAdapter> implements ListJenkinsBuildInfoPresenter.View, ActionMode.Callback,
@@ -147,7 +144,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
             }
         });
         mRecyclerView.addOnItemTouchListener(new ItemTouchListenerAdapter(mRecyclerView, this));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getAppContext()));
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         setEmptyView();
 
@@ -186,10 +183,10 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
     private void deleteItems(final List<Integer> positions) {
-        SnackbarManager.show(Snackbar.with(getContext())
-                .text(getContext().getResources().getQuantityString(R.plurals.items_deleted,
+        SnackbarManager.show(Snackbar.with(getAppContext())
+                .text(getAppContext().getResources().getQuantityString(R.plurals.items_deleted,
                         positions.size(), positions.size()))
-                .actionLabel(getContext().getString(R.string.undo))
+                .actionLabel(getAppContext().getString(R.string.undo))
                 .actionColorResource(R.color.console_text_color)
                 .attachToRecyclerView(mRecyclerView)
                 .actionListener(new ActionClickListener() {
@@ -258,14 +255,14 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
     @Override
-    public Context getContext() {
+    public Context getAppContext() {
         return getActivity();
     }
 
     private void toggleSelection(int position) {
         mRecyclerViewAdapter.toggleSelection(position);
         int count = mRecyclerViewAdapter.getSelectedItemCount();
-        mActionMode.setTitle(getContext().getResources().getQuantityString(R.plurals.selected_items,
+        mActionMode.setTitle(getAppContext().getResources().getQuantityString(R.plurals.selected_items,
                 count, count));
     }
 

@@ -279,11 +279,11 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public void showToast(int resId) {
-        Toast.makeText(getContext(), getText(resId), Toast.LENGTH_LONG).show();
+        Toast.makeText(getAppContext(), getText(resId), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public Context getContext() {
+    public Context getAppContext() {
         return getActivity();
     }
 }
