@@ -12,14 +12,13 @@
             android:protectionLevel="signature"/>
     <uses-permission android:name="org.addhen.birudo.permission.C2D_MESSAGE"/>
     <application
-            android:name="org.addhen.birudo.BirudoroguApplication"
+            android:name=".BirudoroguApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
         <activity
-                android:name="org.addhen.birudo.ui.activity.MainActivity"
-                android:configChanges="screenLayout|orientation|screenSize|keyboardHidden|touchscreen|navigation"
+                android:name=".ui.activity.MainActivity"
                 android:exported="true"
                 android:allowEmbedded="true"
                 android:taskAffinity=""
@@ -32,8 +31,7 @@
         </activity>
 
         <activity
-                android:name="org.addhen.birudo.ui.activity.SettingsActivity"
-                android:configChanges="screenLayout|orientation|screenSize|keyboardHidden|touchscreen|navigation"
+                android:name=".ui.activity.SettingsActivity"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

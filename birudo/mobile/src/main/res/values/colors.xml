@@ -18,11 +18,73 @@
     <color name="activated_color">#20000000</color>
     <color name="pressed_color">#2033b5e5</color>
 
-    <color name="theme_primary">#795548</color>
-    <color name="theme_primary_dark">#5D4037</color>
-    <color name="primary_light">#D7CCC8</color>
-    <color name="theme_accent">#8BC34A</color>
-    <color name="primary_text">#212121</color>
+    <color name="theme_primary">#F44336</color>
+    <color name="theme_primary_dark">#D32F2F</color>
+    <color name="primary_light">#FFCDD2</color>
+    <color name="theme_accent">#4CAF50</color>
+    <color name="primary_text">#2121
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        21</color>
     <color name="secondary_text">#727272</color>
     <color name="actionbar_icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
