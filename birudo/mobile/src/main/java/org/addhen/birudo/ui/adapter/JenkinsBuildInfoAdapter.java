@@ -21,6 +21,7 @@ import org.addhen.birudo.model.JenkinsBuildInfoModel;
 import org.addhen.birudo.util.AppUtil;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -60,7 +61,6 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
 
             ((Widgets) viewHolder).mTimestamp.setText(
                     AppUtil.formatDateTime(getItem(position).getTimestamp()));
-
         }
 
         @Override

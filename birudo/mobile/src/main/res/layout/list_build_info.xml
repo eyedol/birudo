@@ -11,25 +11,25 @@
 	at team@ushahidi.com.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                tools:context=".ui.activity.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    tools:context=".ui.activity.MainActivity">
 
     <android.support.v7.widget.RecyclerView
-            android:id="@id/android:list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fadeScrollbars="false"
-            android:clipToPadding="false"/>
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false"
+        android:clipToPadding="false"/>
 
     <TextView
-            android:id="@id/android:empty"
-            style="@style/EmptyText"
-            android:visibility="gone"
-            android:text="@string/no_build_info"/>
+        android:id="@id/android:empty"
+        style="@style/EmptyText"
+        android:visibility="gone"
+        android:text="@string/no_build_info"/>
 </RelativeLayout>

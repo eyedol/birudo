@@ -21,6 +21,10 @@ import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.listeners.ActionClickListener;
 import com.nispok.snackbar.listeners.EventListener;
 
+import org.addhen.birudo.ui.widget.SimpleDividerItemDecoration;
+import org.lucasr.twowayview.widget.DividerItemDecoration;
+import org.lucasr.twowayview.widget.TwoWayView;
+
 import org.addhen.birudo.R;
 import org.addhen.birudo.RetrieveJenkinsBuildInfo;
 import org.addhen.birudo.model.JenkinsBuildInfoModel;
@@ -32,6 +36,7 @@ import org.addhen.birudo.ui.listener.SwipeToDismissTouchListener;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -71,6 +76,8 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
     private List<JenkinsBuildInfoModel> mModelList;
 
+    private TwoWayView mTwoWayRecyclerView;
+
     public ListJenkinsBuildInfoFragment() {
         super(JenkinsBuildInfoAdapter.class, R.layout.list_build_info, 0, android.R.id.list);
     }
@@ -92,13 +99,12 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
             mListJenkinsBuildInfoPresenter.isAppConfigured();
         }
 
-        initRecyclerView();
-
         if (mListJenkinsBuildInfoPresenter != null) {
             mListJenkinsBuildInfoPresenter.init();
         }
 
         mModelList = new ArrayList<>();
+        initRecyclerView();
     }
 
     @Override
@@ -144,7 +150,8 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
             }
         });
         mRecyclerView.addOnItemTouchListener(new ItemTouchListenerAdapter(mRecyclerView, this));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getAppContext()));
+        final Drawable divider = getResources().getDrawable(R.drawable.list_divider);
+        mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         setEmptyView();
 
