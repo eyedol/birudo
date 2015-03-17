@@ -41,7 +41,8 @@
                     android:paddingLeft="8dp"
                     android:paddingTop="8dp"
                     android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/status"/>
+                    android:layout_toEndOf="@+id/status"
+                    android:layout_toRightOf="@+id/status"/>
 
             <TextView
                     android:id="@+id/display_name_label"
@@ -52,7 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/timestamp"
-                    android:layout_toEndOf="@+id/status"/>
+                    android:layout_toEndOf="@+id/status"
+                android:layout_toRightOf="@+id/status"/>
 
             <TextView
                     android:id="@+id/message"
@@ -63,18 +65,18 @@
                     android:paddingRight="8dp"
                     style="@style/TextBody"
                     android:layout_below="@+id/display_name_label"
-                    android:layout_toEndOf="@+id/status"/>
+                    android:layout_toEndOf="@+id/status"
+                    android:layout_toRightOf="@+id/status"/>
 
             <TextView
                     android:id="@+id/started_by"
                     style="@style/TextHeaderSub"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="8dp"
+                    android:padding="8dp"
                     android:layout_below="@+id/message"
-                    android:layout_toEndOf="@+id/status"/>
+                    android:layout_toEndOf="@+id/status"
+                    android:layout_toRightOf="@+id/status"/>
 
     </RelativeLayout>
 
