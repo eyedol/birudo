@@ -19,7 +19,9 @@ package org.addhen.birudo.ui.activity;
 import com.squareup.otto.Subscribe;
 
 import org.addhen.birudo.R;
+import org.addhen.birudo.model.JenkinsBuildInfoModel;
 import org.addhen.birudo.module.MainActivityModule;
+import org.addhen.birudo.presenter.ListJenkinsBuildInfoPresenter;
 import org.addhen.birudo.presenter.SettingsPresenter;
 import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.fragment.SettingsFragment;
@@ -36,10 +38,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class SettingsActivity extends BaseActivity implements SettingsPresenter.View {
+public class SettingsActivity extends BaseActivity implements ListJenkinsBuildInfoPresenter.View {
 
     @Inject
-    SettingsPresenter mMainPresenter;
+    ListJenkinsBuildInfoPresenter mListJenkinsBuildInfoPresenter;
 
     public SettingsActivity() {
         super(R.layout.settings, 0);
@@ -48,7 +50,7 @@ public class SettingsActivity extends BaseActivity implements SettingsPresenter.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMainPresenter.setView(this);
+        mListJenkinsBuildInfoPresenter.setView(this);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.preference_container, new SettingsFragment())
@@ -59,18 +61,16 @@ public class SettingsActivity extends BaseActivity implements SettingsPresenter.
     @Override
     protected void onResume() {
         super.onResume();
-        mMainPresenter.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mMainPresenter.pause();
     }
 
     @Subscribe
     public void onSenderIdChange(AppState.RefreshGcmTokenEvent event) {
-        mMainPresenter.refreshGcmToken();
+        mListJenkinsBuildInfoPresenter.refreshGcmToken();
     }
 
     protected List<Object> getModules() {
@@ -85,7 +85,12 @@ public class SettingsActivity extends BaseActivity implements SettingsPresenter.
     }
 
     @Override
-    public void showToast(int resId) {
-        Toast.makeText(getAppContext(), resId, Toast.LENGTH_LONG).show();
+    public void setJenkinsBuildInfoListItems(List<JenkinsBuildInfoModel> modelList) {
+        //Do nothing
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getAppContext(), message, Toast.LENGTH_LONG).show();
     }
 }

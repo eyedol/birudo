@@ -20,7 +20,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.addhen.birudo.BirudoroguApplication;
 import org.addhen.birudo.RetrieveJenkinsBuildInfo;
+import org.addhen.birudo.module.MainActivityModule;
 import org.addhen.birudo.receiver.GcmBroadcastReceiver;
+import org.addhen.birudo.ui.activity.BaseActivity;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -28,6 +30,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,11 +57,20 @@ public class GcmIntentService extends IntentService {
         super("GcmIntentService");
     }
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+        injectDependencies();
+    }
+
+    public void injectDependencies() {
+        List<Object> modules = new LinkedList<>();
+        modules.add(new MainActivityModule());
+
         BirudoroguApplication application = (BirudoroguApplication) getApplication();
-        application.inject(this);
+        application.add(modules).inject(this);
     }
 
     @Override

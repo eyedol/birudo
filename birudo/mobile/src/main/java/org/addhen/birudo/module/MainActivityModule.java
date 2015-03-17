@@ -16,6 +16,9 @@
 
 package org.addhen.birudo.module;
 
+import android.content.Context;
+
+import org.addhen.birudo.RetrieveJenkinsBuildInfo;
 import org.addhen.birudo.core.repository.JenkinsBuildInfoRepository;
 import org.addhen.birudo.core.repository.JenkinsRepository;
 import org.addhen.birudo.core.task.PostExecutionThread;

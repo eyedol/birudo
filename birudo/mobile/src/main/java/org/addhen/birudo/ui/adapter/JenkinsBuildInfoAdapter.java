@@ -41,12 +41,13 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
             if (getItem(position).getResult() == JenkinsBuildInfoModel.Result.SUCCESS) {
-                ((Widgets) viewHolder).mStatus.setBackground(
-                        context.getResources().getDrawable(R.drawable.success_notification_bg));
+                ((Widgets) viewHolder).mStatus.setBackgroundColor(
+                        context.getResources().getColor(R.color.success));
             } else {
-                ((Widgets) viewHolder).mStatus.setBackground(
-                        context.getResources().getDrawable(R.drawable.fail_notification_bg));
+                ((Widgets) viewHolder).mStatus.setBackgroundColor(
+                        context.getResources().getColor(R.color.failed));
             }
+
             String name = getItem(position).getDisplayName();
             ((Widgets) viewHolder).mDisplayName.setText(name);
 

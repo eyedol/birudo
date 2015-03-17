@@ -79,9 +79,9 @@ public class SettingsFragment extends PreferenceFragment
     private Preference mAbout;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSettingsPresenter.setView(this);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         Uri data = getActivity().getIntent().getData();
 
         if (data != null && data.toString().contains("jenkins_server")) {
@@ -149,6 +149,7 @@ public class SettingsFragment extends PreferenceFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         injectDependencies();
+        mSettingsPresenter.setView(this);
     }
 
     public void onResume() {
@@ -162,10 +163,6 @@ public class SettingsFragment extends PreferenceFragment
         super.onPause();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    private void injectDependencies() {
-        ((BaseActivity) getActivity()).inject(this);
     }
 
     @Override
@@ -285,5 +282,9 @@ public class SettingsFragment extends PreferenceFragment
     @Override
     public Context getAppContext() {
         return getActivity();
+    }
+
+    private void injectDependencies() {
+        ((BaseActivity) getActivity()).inject(this);
     }
 }
