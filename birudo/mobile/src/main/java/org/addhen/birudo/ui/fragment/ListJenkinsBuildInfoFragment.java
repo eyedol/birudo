@@ -16,27 +16,9 @@
 
 package org.addhen.birudo.ui.fragment;
 
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.listeners.ActionClickListener;
-import com.nispok.snackbar.listeners.EventListener;
-
-import org.addhen.birudo.ui.widget.SimpleDividerItemDecoration;
-import org.lucasr.twowayview.widget.DividerItemDecoration;
-import org.lucasr.twowayview.widget.TwoWayView;
-
-import org.addhen.birudo.R;
-import org.addhen.birudo.RetrieveJenkinsBuildInfo;
-import org.addhen.birudo.model.JenkinsBuildInfoModel;
-import org.addhen.birudo.presenter.ListJenkinsBuildInfoPresenter;
-import org.addhen.birudo.state.AppState;
-import org.addhen.birudo.ui.adapter.JenkinsBuildInfoAdapter;
-import org.addhen.birudo.ui.listener.ItemTouchListenerAdapter;
-import org.addhen.birudo.ui.listener.SwipeToDismissTouchListener;
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +29,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.listeners.ActionClickListener;
+import com.nispok.snackbar.listeners.EventListener;
+
+import org.addhen.birudo.R;
+import org.addhen.birudo.RetrieveJenkinsBuildInfo;
+import org.addhen.birudo.model.JenkinsBuildInfoModel;
+import org.addhen.birudo.presenter.ListJenkinsBuildInfoPresenter;
+import org.addhen.birudo.state.AppState;
+import org.addhen.birudo.ui.adapter.JenkinsBuildInfoAdapter;
+import org.addhen.birudo.ui.listener.ItemTouchListenerAdapter;
+import org.addhen.birudo.ui.listener.SwipeToDismissTouchListener;
+import org.addhen.birudo.ui.widget.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +73,6 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
     private List<JenkinsBuildInfoModel> mModelList;
 
-    private TwoWayView mTwoWayRecyclerView;
-
     public ListJenkinsBuildInfoFragment() {
         super(JenkinsBuildInfoAdapter.class, R.layout.list_build_info, 0, android.R.id.list);
     }
@@ -92,43 +87,39 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
-
-        if (mListJenkinsBuildInfoPresenter != null) {
-            mListJenkinsBuildInfoPresenter.isAppConfigured();
-        }
-
-        if (mListJenkinsBuildInfoPresenter != null) {
-            mListJenkinsBuildInfoPresenter.init();
-        }
-
+        mListJenkinsBuildInfoPresenter.isAppConfigured();
         mModelList = new ArrayList<>();
         initRecyclerView();
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        // Calling this here because when called in the onResume method the activity doesn't
-        // attached in time and causing getActivity() to return a null value.
-        if(mListJenkinsBuildInfoPresenter != null) {
-            mListJenkinsBuildInfoPresenter.resume();
-        }
-
+        mListJenkinsBuildInfoPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if(mListJenkinsBuildInfoPresenter != null) {
-            mListJenkinsBuildInfoPresenter.pause();
-        }
+        mListJenkinsBuildInfoPresenter.pause();
     }
 
     @Override
     public void initPresenter() {
-        if(mListJenkinsBuildInfoPresenter != null) {
+        if (mListJenkinsBuildInfoPresenter != null) {
             mListJenkinsBuildInfoPresenter.setView(this);
         }
     }
@@ -150,7 +141,6 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
             }
         });
         mRecyclerView.addOnItemTouchListener(new ItemTouchListenerAdapter(mRecyclerView, this));
-        final Drawable divider = getResources().getDrawable(R.drawable.list_divider);
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         setEmptyView();
@@ -165,7 +155,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
                     @Override
                     public void onDismiss(RecyclerView view,
-                            final List<SwipeToDismissTouchListener.PendingDismissData> dismissData) {
+                                          final List<SwipeToDismissTouchListener.PendingDismissData> dismissData) {
                         List<Integer> positions = new ArrayList<>();
                         for (SwipeToDismissTouchListener.PendingDismissData data : dismissData) {
                             mModelList.add(mRecyclerViewAdapter.getItem(data.position));

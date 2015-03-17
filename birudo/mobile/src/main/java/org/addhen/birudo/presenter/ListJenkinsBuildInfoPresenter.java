@@ -247,14 +247,11 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
         mView.setJenkinsBuildInfoListItems(jenkinsBuildInfoModels);
     }
 
-    public void init() {
-        getJenkinBuildInfoList();
-    }
-
     @Override
     public void resume() {
         mSenderIdState.registerEvent(this);
         mBuildState.registerEvent(this);
+        getJenkinBuildInfoList();
     }
 
     @Override
