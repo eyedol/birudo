@@ -27,6 +27,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -36,6 +37,10 @@ public class AppUtil {
 
     private AppUtil() {
 
+    }
+
+    public static boolean isCollectionEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {

@@ -35,6 +35,7 @@ import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.listeners.ActionClickListener;
 import com.nispok.snackbar.listeners.EventListener;
 
+
 import org.addhen.birudo.R;
 import org.addhen.birudo.RetrieveJenkinsBuildInfo;
 import org.addhen.birudo.model.JenkinsBuildInfoModel;
@@ -43,9 +44,13 @@ import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.adapter.JenkinsBuildInfoAdapter;
 import org.addhen.birudo.ui.listener.ItemTouchListenerAdapter;
 import org.addhen.birudo.ui.listener.SwipeToDismissTouchListener;
+import org.addhen.birudo.ui.listener.SwipeToDismissTouchListener.PendingDismissData;
 import org.addhen.birudo.ui.widget.SimpleDividerItemDecoration;
+import org.addhen.birudo.util.AppUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,7 +76,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
     private ActionMode mActionMode;
 
-    private List<JenkinsBuildInfoModel> mModelList;
+    private List<PendingDeletedJenkinsBuildInfoModel> mPendingList;
 
     public ListJenkinsBuildInfoFragment() {
         super(JenkinsBuildInfoAdapter.class, R.layout.list_build_info, 0, android.R.id.list);
@@ -95,7 +100,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
         mListJenkinsBuildInfoPresenter.isAppConfigured();
-        mModelList = new ArrayList<>();
+        mPendingList = new ArrayList<>();
         initRecyclerView();
     }
 
@@ -145,6 +150,10 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         setEmptyView();
 
+        swipeToDelete();
+    }
+
+    private void swipeToDelete() {
         mSwipeToDismissTouchListener = new SwipeToDismissTouchListener(mRecyclerView,
                 new SwipeToDismissTouchListener.DismissCallbacks() {
 
@@ -155,15 +164,15 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
                     @Override
                     public void onDismiss(RecyclerView view,
-                                          final List<SwipeToDismissTouchListener.PendingDismissData> dismissData) {
-                        List<Integer> positions = new ArrayList<>();
-                        for (SwipeToDismissTouchListener.PendingDismissData data : dismissData) {
-                            mModelList.add(mRecyclerViewAdapter.getItem(data.position));
+                                          final List<PendingDismissData> dismissData) {
+                        for (PendingDismissData data : dismissData) {
+                            mPendingList.add(
+                                    new PendingDeletedJenkinsBuildInfoModel(data.position,
+                                            mRecyclerViewAdapter.getItem(data.position)));
                             mRecyclerViewAdapter.removeItem(
                                     mRecyclerViewAdapter.getItem(data.position));
-                            positions.add(data.position);
                         }
-                        deleteItems(positions);
+                        deleteItems();
                     }
                 });
 
@@ -172,17 +181,21 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
 
     private void setItemsForDeletion(final List<Integer> positions) {
-        for (Integer position : positions) {
-            mModelList.add(mRecyclerViewAdapter.getItem(position));
-            mRecyclerViewAdapter.removeItem(mRecyclerViewAdapter.getItem(position));
+        for (PendingDeletedJenkinsBuildInfoModel model: mPendingList) {
+            mPendingList.add(new PendingDeletedJenkinsBuildInfoModel(model.position,mRecyclerViewAdapter.getItem(model.position)));
+            mRecyclerViewAdapter.removeItem(mRecyclerViewAdapter.getItem(model.position));
         }
-        deleteItems(positions);
+        deleteItems();
     }
 
-    private void deleteItems(final List<Integer> positions) {
+    private void deleteItems() {
+        //Sort in ascending order for restoring deleted items
+        Comparator cmp = Collections.reverseOrder();
+        Collections.sort(mPendingList, cmp);
+
         SnackbarManager.show(Snackbar.with(getAppContext())
                 .text(getAppContext().getResources().getQuantityString(R.plurals.items_deleted,
-                        positions.size(), positions.size()))
+                        mPendingList.size(), mPendingList.size()))
                 .actionLabel(getAppContext().getString(R.string.undo))
                 .actionColorResource(R.color.console_text_color)
                 .attachToRecyclerView(mRecyclerView)
@@ -190,9 +203,12 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
                     @Override
                     public void onActionClicked(Snackbar snackbar) {
                         // Restore items
-                        for (Integer i : positions) {
-                            mRecyclerViewAdapter.addItem(mModelList.get(i), i);
+                        for (PendingDeletedJenkinsBuildInfoModel pendingDeletedJenkinsBuildInfoModel: mPendingList) {
+                            mRecyclerViewAdapter.addItem(pendingDeletedJenkinsBuildInfoModel.jenkinsBuildInfoModel,
+                                    pendingDeletedJenkinsBuildInfoModel.position);
                         }
+                        clearItems();
+
                     }
                 })
                 .eventListener(new EventListener() {
@@ -213,6 +229,15 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
                     @Override
                     public void onDismiss(Snackbar snackbar) {
+                        //Delete items
+                        if (!snackbar.isActionClicked()) {
+                            if (!AppUtil.isCollectionEmpty(mPendingList)) {
+                                for (PendingDeletedJenkinsBuildInfoModel pendingDeletedJenkinsBuildInfoModel: mPendingList) {
+                                    mListJenkinsBuildInfoPresenter.deleteBuildInfo(pendingDeletedJenkinsBuildInfoModel.jenkinsBuildInfoModel);
+                                }
+                            }
+                            clearItems();
+                        }
                         setEmptyView();
                     }
 
@@ -223,11 +248,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
                     @Override
                     public void onDismissed(Snackbar snackbar) {
-                        //Delete items
-                        for (Integer i : positions) {
-                            mListJenkinsBuildInfoPresenter.deleteBuildInfo(mModelList.get(i));
-                        }
-                        clearItems();
+
                     }
                 }));
     }
@@ -323,6 +344,24 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
     private void clearItems() {
         mRecyclerViewAdapter.clearSelections();
-        mModelList.clear();
+        mPendingList.clear();
+    }
+
+    public static class PendingDeletedJenkinsBuildInfoModel implements Comparable<PendingDeletedJenkinsBuildInfoModel> {
+
+        public int position;
+
+        public JenkinsBuildInfoModel jenkinsBuildInfoModel;
+
+        public PendingDeletedJenkinsBuildInfoModel(int position, JenkinsBuildInfoModel jenkinsBuildInfoModel) {
+            this.position = position;
+            this.jenkinsBuildInfoModel = jenkinsBuildInfoModel;
+        }
+
+        @Override
+        public int compareTo(PendingDeletedJenkinsBuildInfoModel other) {
+            // Sort by descending position
+            return other.position - position;
+        }
     }
 }
