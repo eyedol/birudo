@@ -25,7 +25,7 @@ import org.addhen.birudo.data.qualifier.Vibrate;
 import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
 import org.addhen.birudo.model.mapper.JenkinsBuildInfoJsonModelMapper;
 import org.addhen.birudo.state.BuildState;
-import org.addhen.birudo.ui.BuildStateNotification;
+import org.addhen.birudo.ui.widget.BuildStateNotification;
 
 import android.content.Context;
 

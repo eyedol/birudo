@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.addhen.birudo.ui;
+package org.addhen.birudo.ui.widget;
 
 import org.addhen.birudo.R;
 import org.addhen.birudo.data.pref.BooleanPreference;
