@@ -222,7 +222,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
 
-    private void setItemsForMulipleDeletion() {
+    private void setItemsForMultipleDeletion() {
         // Add selected items to the pending list for deletion.
         addItemsForDeletion();
         for (PendingDeletedJenkinsBuildInfoModel model : mPendingList) {
@@ -366,7 +366,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         boolean result = false;
 
         if (item.getItemId() == R.id.list_jenkins_build_info_delete) {
-            setItemsForMulipleDeletion();
+            setItemsForMultipleDeletion();
             result = true;
         }
 
