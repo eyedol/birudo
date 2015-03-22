@@ -61,6 +61,7 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
 
             ((Widgets) viewHolder).mTimestamp.setText(
                     AppUtil.formatDateTime(getItem(position).getTimestamp()));
+            ((Widgets) viewHolder).row.setActivated(isChecked(position));
         }
 
         @Override
@@ -86,7 +87,7 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
     }
 
     public void toggleSelection(int position) {
-        if (mSelectedItems.get(position, false)) {
+        if (isChecked(position)) {
             mSelectedItems.delete(position);
         } else {
             mSelectedItems.put(position, true);
@@ -111,6 +112,10 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
         return items;
     }
 
+    public boolean isChecked(int position){
+        return mSelectedItems.get(position, false);
+    }
+
     public class Widgets extends RecyclerView.ViewHolder {
 
         TextView mStatus;
@@ -122,9 +127,11 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
         TextView mStartedBy;
 
         TextView mTimestamp;
+        View row;
 
         public Widgets(View convertView) {
             super(convertView);
+            row = convertView;
             mStatus = (TextView) convertView.findViewById(R.id.status);
             mDisplayName = (TextView) convertView.findViewById(R.id.display_name_label);
             mBuildStatus = (TextView) convertView.findViewById(R.id.message);
