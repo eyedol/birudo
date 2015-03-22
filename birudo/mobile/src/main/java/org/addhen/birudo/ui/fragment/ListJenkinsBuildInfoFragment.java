@@ -77,6 +77,14 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
     private List<PendingDeletedJenkinsBuildInfoModel> mPendingList;
 
+    private static final String CAB_ENABLED = "can_enabled";
+
+    private static final String SELECTED_ITEMS = "selected_items";
+
+    private boolean isCabEnabled = false;
+
+    private ArrayList<Integer> selectedItemPositions;
+
     public ListJenkinsBuildInfoFragment() {
         super(JenkinsBuildInfoAdapter.class, R.layout.list_build_info, 0, android.R.id.list);
     }
@@ -101,18 +109,22 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         mListJenkinsBuildInfoPresenter.isAppConfigured();
         mPendingList = new ArrayList<>();
         initRecyclerView();
+        if (savedInstance != null) {
+            isCabEnabled = savedInstance.getBoolean(CAB_ENABLED);
+            selectedItemPositions = savedInstance.getIntegerArrayList(SELECTED_ITEMS);
+        }
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mListJenkinsBuildInfoPresenter.resume();
+        restoreCabItem();
     }
 
     @Override
@@ -122,12 +134,40 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
     @Override
+    public void onSaveInstanceState(Bundle state) {
+        state.putBoolean(CAB_ENABLED, isCabEnabled);
+        state.putIntegerArrayList(SELECTED_ITEMS, new ArrayList<>(mRecyclerViewAdapter.getSelectedItems()));
+        super.onSaveInstanceState(state);
+    }
+
+    @Override
     public void initPresenter() {
         if (mListJenkinsBuildInfoPresenter != null) {
             mListJenkinsBuildInfoPresenter.setView(this);
         }
     }
 
+    /**
+     * Restore CAB items when there is a screen orientation
+     */
+    private void restoreCabItem() {
+
+        // Start CAB if it was started before screen orientation
+        if (isCabEnabled) {
+            getActivity().startActionMode(this);
+        }
+
+        // Toggle selection based on the saved state
+        if(selectedItemPositions !=null) {
+            for(Integer position: selectedItemPositions) {
+                toggleSelection(position);
+            }
+        }
+    }
+
+    /**
+     * Set a view to indicate that list is empty
+     */
     private void setEmptyView() {
         if (mRecyclerViewAdapter != null && mRecyclerViewAdapter.getItemCount() == 0) {
             mEmptyView.setVisibility(View.VISIBLE);
@@ -351,6 +391,10 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         mSwipeToDismissTouchListener.setEnabled(true);
         mRecyclerViewAdapter.clearSelections();
         mActionMode = null;
+        isCabEnabled = false;
+        if(selectedItemPositions !=null) {
+            selectedItemPositions.clear();
+        }
     }
 
     @Override
@@ -361,7 +405,6 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
             toggleSelection(position);
         } else {
             if (url != null || !url.isEmpty()) {
-
                 // Launch the default browser to open up Jenkins web console.
                 final String fullUrl = String.format("%s/console", url);
                 startActivity(new Intent(Intent.ACTION_VIEW,
@@ -375,6 +418,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
         // Start the action mode view and mark item as selected.
         getActivity().startActionMode(this);
+        isCabEnabled = true;
         toggleSelection(position);
     }
 
