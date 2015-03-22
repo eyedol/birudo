@@ -26,4 +26,6 @@
     <color name="secondary_text">#727272</color>
     <color name="actionbar_icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+    <color name="selected_item_color">#edfbf1</color>
+    <color name="pressed_item_color">#fae8e8</color>
 </resources>
