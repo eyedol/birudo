@@ -180,7 +180,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
 
-    private void setItemsForDeletion(final List<Integer> positions) {
+    private void setItemsForDeletion() {
         for (PendingDeletedJenkinsBuildInfoModel model: mPendingList) {
             mPendingList.add(new PendingDeletedJenkinsBuildInfoModel(model.position,mRecyclerViewAdapter.getItem(model.position)));
             mRecyclerViewAdapter.removeItem(mRecyclerViewAdapter.getItem(model.position));
@@ -302,7 +302,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         boolean result = false;
 
         if (item.getItemId() == R.id.list_jenkins_build_info_delete) {
-            setItemsForDeletion(mRecyclerViewAdapter.getSelectedItems());
+            setItemsForDeletion();
             result = true;
         }
 
