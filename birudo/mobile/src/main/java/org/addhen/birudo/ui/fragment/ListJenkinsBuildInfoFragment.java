@@ -35,7 +35,6 @@ import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.listeners.ActionClickListener;
 import com.nispok.snackbar.listeners.EventListener;
 
-
 import org.addhen.birudo.R;
 import org.addhen.birudo.RetrieveJenkinsBuildInfo;
 import org.addhen.birudo.model.JenkinsBuildInfoModel;
@@ -169,6 +168,9 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
                             mPendingList.add(
                                     new PendingDeletedJenkinsBuildInfoModel(data.position,
                                             mRecyclerViewAdapter.getItem(data.position)));
+
+                            // Soft delete items by removing them from the adapter. This will allow
+                            // them to be restored by the user.
                             mRecyclerViewAdapter.removeItem(
                                     mRecyclerViewAdapter.getItem(data.position));
                         }
@@ -180,16 +182,21 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
 
-    private void setItemsForDeletion() {
-        for (PendingDeletedJenkinsBuildInfoModel model: mPendingList) {
-            mPendingList.add(new PendingDeletedJenkinsBuildInfoModel(model.position,mRecyclerViewAdapter.getItem(model.position)));
+    private void setItemsForMulipleDeletion() {
+        // Add selected items to the pending list for deletion.
+        addItemsForDeletion();
+        for (PendingDeletedJenkinsBuildInfoModel model : mPendingList) {
+            //mPendingList.add(new PendingDeletedJenkinsBuildInfoModel(model.position,mRecyclerViewAdapter.getItem(model.position)));
             mRecyclerViewAdapter.removeItem(mRecyclerViewAdapter.getItem(model.position));
         }
         deleteItems();
     }
 
+    /**
+     * Shows a snackbar showing the number of items deleted and offers the options to undo the deletion.
+     */
     private void deleteItems() {
-        //Sort in ascending order for restoring deleted items
+        // Sort in ascending order for restoring deleted items
         Comparator cmp = Collections.reverseOrder();
         Collections.sort(mPendingList, cmp);
 
@@ -202,8 +209,8 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
                 .actionListener(new ActionClickListener() {
                     @Override
                     public void onActionClicked(Snackbar snackbar) {
-                        // Restore items
-                        for (PendingDeletedJenkinsBuildInfoModel pendingDeletedJenkinsBuildInfoModel: mPendingList) {
+                        // Restore items to their respective positions in the adapter.
+                        for (PendingDeletedJenkinsBuildInfoModel pendingDeletedJenkinsBuildInfoModel : mPendingList) {
                             mRecyclerViewAdapter.addItem(pendingDeletedJenkinsBuildInfoModel.jenkinsBuildInfoModel,
                                     pendingDeletedJenkinsBuildInfoModel.position);
                         }
@@ -214,25 +221,27 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
                 .eventListener(new EventListener() {
                     @Override
                     public void onShow(Snackbar snackbar) {
-
+                        // Do nothing.
                     }
 
                     @Override
                     public void onShowByReplace(Snackbar snackbar) {
-
+                        // Do nothing.
                     }
 
                     @Override
                     public void onShown(Snackbar snackbar) {
-
+                        // Do nothing.
                     }
 
                     @Override
                     public void onDismiss(Snackbar snackbar) {
-                        //Delete items
+                        // Permanently delete items from the local database.
                         if (!snackbar.isActionClicked()) {
+                            // Make sure the list of items to be deleted is not empty before
+                            // attempting to delete them.
                             if (!AppUtil.isCollectionEmpty(mPendingList)) {
-                                for (PendingDeletedJenkinsBuildInfoModel pendingDeletedJenkinsBuildInfoModel: mPendingList) {
+                                for (PendingDeletedJenkinsBuildInfoModel pendingDeletedJenkinsBuildInfoModel : mPendingList) {
                                     mListJenkinsBuildInfoPresenter.deleteBuildInfo(pendingDeletedJenkinsBuildInfoModel.jenkinsBuildInfoModel);
                                 }
                             }
@@ -253,10 +262,20 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
                 }));
     }
 
+    /**
+     * To be called by the activity holding this fragment so it causes the GCM Token
+     * refresh.
+     */
     public void onSenderIdChange() {
         mListJenkinsBuildInfoPresenter.refreshGcmToken();
     }
 
+    /**
+     * To be called by the activity holding this fragment so it adds a jenkins notification
+     * to the local database.
+     *
+     * @param event The {@link org.addhen.birudo.state.BuildState.BuildStateEvent} event triggered.
+     */
     public void onJenkinsBuildInfoFetched(AppState.BuildStateEvent event) {
         mListJenkinsBuildInfoPresenter.addJenkinsBuildInfo(event.getJenkinsBuildInfoModel());
     }
@@ -277,6 +296,11 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         return getActivity();
     }
 
+    /**
+     * Select or de-select an item in the adapter.
+     *
+     * @param position The position of the item to be marked.
+     */
     private void toggleSelection(int position) {
         mRecyclerViewAdapter.toggleSelection(position);
         int count = mRecyclerViewAdapter.getSelectedItemCount();
@@ -302,7 +326,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         boolean result = false;
 
         if (item.getItemId() == R.id.list_jenkins_build_info_delete) {
-            setItemsForDeletion();
+            setItemsForMulipleDeletion();
             result = true;
         }
 
@@ -312,8 +336,18 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         return result;
     }
 
+
+    private void addItemsForDeletion() {
+        for (Integer position : mRecyclerViewAdapter.getSelectedItems()) {
+            mPendingList.add(
+                    new PendingDeletedJenkinsBuildInfoModel(position,
+                            mRecyclerViewAdapter.getItem(position)));
+        }
+    }
+
     @Override
     public void onDestroyActionMode(ActionMode mode) {
+        // Nullify and clear all selected item when action mode is stopped.
         mSwipeToDismissTouchListener.setEnabled(true);
         mRecyclerViewAdapter.clearSelections();
         mActionMode = null;
@@ -328,6 +362,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         } else {
             if (url != null || !url.isEmpty()) {
 
+                // Launch the default browser to open up Jenkins web console.
                 final String fullUrl = String.format("%s/console", url);
                 startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse(fullUrl)));
@@ -335,19 +370,27 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         }
     }
 
+
     @Override
     public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
-        //Do nothing
+        // Start the action mode view and mark item as selected.
         getActivity().startActionMode(this);
         toggleSelection(position);
     }
 
+    /**
+     * Clear all selected items marked for deletion.
+     */
     private void clearItems() {
         mRecyclerViewAdapter.clearSelections();
         mPendingList.clear();
     }
 
-    public static class PendingDeletedJenkinsBuildInfoModel implements Comparable<PendingDeletedJenkinsBuildInfoModel> {
+    /**
+     * For initializing {@link JenkinsBuildInfoModel} for deletions. Holds the position of the model
+     * in the adapter and the model itself.
+     */
+    private static class PendingDeletedJenkinsBuildInfoModel implements Comparable<PendingDeletedJenkinsBuildInfoModel> {
 
         public int position;
 
@@ -360,7 +403,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
 
         @Override
         public int compareTo(PendingDeletedJenkinsBuildInfoModel other) {
-            // Sort by descending position
+            // Sort by descending order of position.
             return other.position - position;
         }
     }
