@@ -186,8 +186,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         // Add selected items to the pending list for deletion.
         addItemsForDeletion();
         for (PendingDeletedJenkinsBuildInfoModel model : mPendingList) {
-            //mPendingList.add(new PendingDeletedJenkinsBuildInfoModel(model.position,mRecyclerViewAdapter.getItem(model.position)));
-            mRecyclerViewAdapter.removeItem(mRecyclerViewAdapter.getItem(model.position));
+            mRecyclerViewAdapter.removeItem(model.jenkinsBuildInfoModel);
         }
         deleteItems();
     }
@@ -297,7 +296,8 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     }
 
     /**
-     * Select or de-select an item in the adapter.
+     * Select or de-select an item in the adapter and show the count in the contextual actionbar's
+     * title.
      *
      * @param position The position of the item to be marked.
      */
