@@ -71,14 +71,13 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def newName = outputFile.name.replace(".apk",
-                        "-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() +
-                                ".apk");
+                def newName = outputFile.name.replace(outputFile.name, "Birudo-v" + defaultConfig.versionName + "-" + variant.buildType.name.toUpperCase() +
+                        ".apk")
 
-                output.outputFile = file("$project.buildDir/apk/" + newName);
+                output.outputFile = file("$project.buildDir/apk/" + newName)
                 if (output.zipAlign) {
                     output.zipAlign.outputFile =
-                            file("$project.buildDir/apk/" + newName.replace("-unaligned", ""));
+                            file("$project.buildDir/apk/" + newName.replace("-unaligned", ""))
                 }
             }
         }
@@ -112,7 +111,7 @@ play {
 release {
     grgit = Grgit.open('.')
 
-    def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
+    def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}")
 
     versionStrategy  Strategies.PRE_RELEASE.copyWith(stages: ['alpha', 'beta', 'rc'] as SortedSet)
 
