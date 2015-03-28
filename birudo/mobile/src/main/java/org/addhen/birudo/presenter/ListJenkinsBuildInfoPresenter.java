@@ -19,12 +19,6 @@ package org.addhen.birudo.presenter;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import org.addhen.birudo.data.pref.StringPreference;
-import org.addhen.birudo.data.qualifier.GcmToken;
-import org.addhen.birudo.data.qualifier.JenkinsBaseUrl;
-import org.addhen.birudo.data.qualifier.JenkinsToken;
-import org.addhen.birudo.data.qualifier.JenkinsUsername;
-import org.addhen.birudo.data.qualifier.SenderId;
 import org.addhen.birudo.ErrorMessageFactory;
 import org.addhen.birudo.R;
 import org.addhen.birudo.core.entity.GcmRegistrationStatus;
@@ -40,6 +34,12 @@ import org.addhen.birudo.core.usecase.ListJenkinsBuildInfoUsecase;
 import org.addhen.birudo.core.usecase.RegisterGCMTokenOnServerUsecase;
 import org.addhen.birudo.core.usecase.RequestGCMToken;
 import org.addhen.birudo.core.usecase.RequestGCMTokenUsecase;
+import org.addhen.birudo.data.pref.StringPreference;
+import org.addhen.birudo.data.qualifier.GcmToken;
+import org.addhen.birudo.data.qualifier.JenkinsBaseUrl;
+import org.addhen.birudo.data.qualifier.JenkinsToken;
+import org.addhen.birudo.data.qualifier.JenkinsUsername;
+import org.addhen.birudo.data.qualifier.SenderId;
 import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
 import org.addhen.birudo.model.JenkinsBuildInfoModel;
 import org.addhen.birudo.model.JenkinsUserModel;
@@ -48,8 +48,6 @@ import org.addhen.birudo.model.mapper.JenkinsUserModelMapper;
 import org.addhen.birudo.state.BuildState;
 import org.addhen.birudo.state.SenderIdState;
 import org.addhen.birudo.view.IView;
-
-import android.text.TextUtils;
 
 import java.util.List;
 
@@ -174,10 +172,10 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
 
     @Inject
     public ListJenkinsBuildInfoPresenter(RequestGCMTokenUsecase requestGCMTokenUsecase,
-            RegisterGCMTokenOnServerUsecase registerGCMTokenOnServerUsecase,
-            ListJenkinsBuildInfoUsecase listJenkinsBuildInfoUsecase,
-            DeleteJenkinsBuildInfoUsecase deleteJenkinsBuildInfoUsecase,
-            AddJenkinsBuildInfoUsecase addJenkinsBuildInfoUsecase) {
+                                         RegisterGCMTokenOnServerUsecase registerGCMTokenOnServerUsecase,
+                                         ListJenkinsBuildInfoUsecase listJenkinsBuildInfoUsecase,
+                                         DeleteJenkinsBuildInfoUsecase deleteJenkinsBuildInfoUsecase,
+                                         AddJenkinsBuildInfoUsecase addJenkinsBuildInfoUsecase) {
         mRequestGCMTokenUsecase = requestGCMTokenUsecase;
         mRegisterGCMTokenOnServerUsecase = registerGCMTokenOnServerUsecase;
         mListJenkinsBuildInfoUsecase = listJenkinsBuildInfoUsecase;
@@ -225,7 +223,7 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
                         ? jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0)
                         .getUserId()
                         : jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0)
-                                .getAddr();
+                        .getAddr();
         jenkinsBuildInfo.setUserName(userName);
         jenkinsBuildInfo.setDisplayName(jenkinsBuildInfoJsonModel.getDisplayName());
         mAddJenkinsBuildInfoUsecase.execute(jenkinsBuildInfo, mAddJenkinsBuildInfoCallback);
@@ -260,7 +258,7 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
         mListJenkinsBuildInfoUsecase.execute(mListJenkinsBuildInfoCallback);
     }
 
-    public void deleteBuildInfo( JenkinsBuildInfoModel buildInfoModel) {
+    public void deleteBuildInfo(JenkinsBuildInfoModel buildInfoModel) {
         final JenkinsBuildInfo jenkinsBuildInfo = mJenkinsBuildInfoModelMapper.unmap(buildInfoModel);
         mDeleteJenkinsBuildInfoUsecase.execute(jenkinsBuildInfo, mDeleteJenkinsBuildCallback);
     }

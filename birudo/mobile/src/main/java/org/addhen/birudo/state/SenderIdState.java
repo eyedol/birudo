@@ -18,9 +18,9 @@ package org.addhen.birudo.state;
 
 public interface SenderIdState extends State {
 
-    public void onSenderIdChange();
+    void onSenderIdChange();
 
-    public static class RefreshGcmTokenEvent {
+    class RefreshGcmTokenEvent {
 
     }
 }

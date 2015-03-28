@@ -4,6 +4,7 @@ import org.addhen.birudo.data.qualifier.ActivityContext;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import javax.inject.Inject;
 
@@ -20,9 +21,18 @@ public class LaunchActivity {
     }
 
     public void settings() {
-        Intent intent = SettingsActivity.getIntent(mContext);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(settingsIntent());
+    }
+
+    public void settings(Bundle bundle) {
+        Intent intent = settingsIntent();
+        intent.putExtras(bundle);
         mContext.startActivity(intent);
     }
 
+    private Intent settingsIntent() {
+        Intent intent = SettingsActivity.getIntent(mContext);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 }

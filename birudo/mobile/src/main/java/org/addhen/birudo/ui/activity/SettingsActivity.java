@@ -16,22 +16,21 @@
 
 package org.addhen.birudo.ui.activity;
 
+import com.nispok.snackbar.Snackbar;
 import com.squareup.otto.Subscribe;
 
 import org.addhen.birudo.R;
 import org.addhen.birudo.model.JenkinsBuildInfoModel;
 import org.addhen.birudo.module.MainActivityModule;
 import org.addhen.birudo.presenter.ListJenkinsBuildInfoPresenter;
-import org.addhen.birudo.presenter.SettingsPresenter;
+import org.addhen.birudo.presenter.MainPresenter;
+import org.addhen.birudo.state.AppConfigState;
 import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.fragment.SettingsFragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +38,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class SettingsActivity extends BaseActivity implements ListJenkinsBuildInfoPresenter.View {
+public class SettingsActivity extends BaseActivity implements ListJenkinsBuildInfoPresenter.View{
 
     @Inject
     ListJenkinsBuildInfoPresenter mListJenkinsBuildInfoPresenter;
@@ -52,6 +51,13 @@ public class SettingsActivity extends BaseActivity implements ListJenkinsBuildIn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListJenkinsBuildInfoPresenter.setView(this);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle !=null) {
+            boolean isConfigured = bundle.getBoolean(MainPresenter.SETTINGS_BUNDLE);
+            if (!isConfigured) {
+                showMessage(getText(R.string.app_config_status).toString());
+            }
+        }
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.preference_container, new SettingsFragment())
@@ -96,6 +102,7 @@ public class SettingsActivity extends BaseActivity implements ListJenkinsBuildIn
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getAppContext(), message, Toast.LENGTH_LONG).show();
+        Snackbar.with(getApplicationContext()).text(message).show(this);
     }
+
 }

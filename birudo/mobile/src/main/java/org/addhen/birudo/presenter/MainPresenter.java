@@ -1,5 +1,6 @@
 package org.addhen.birudo.presenter;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import org.addhen.birudo.data.pref.StringPreference;
@@ -12,6 +13,8 @@ import javax.inject.Inject;
  * Created by eyedol on 3/28/15.
  */
 public class MainPresenter implements Presenter {
+
+    public static String SETTINGS_BUNDLE = "settings";
 
     @GcmToken
     StringPreference mGcmTokenPreference;
@@ -31,7 +34,9 @@ public class MainPresenter implements Presenter {
     @Override
     public void resume() {
         if(!isAppConfigured()) {
-            launchActivity.settings();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(SETTINGS_BUNDLE, false);
+            launchActivity.settings(bundle);
         }
     }
 

@@ -21,7 +21,7 @@ import com.squareup.otto.Bus;
 import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
 
 /**
- * @author Ushahidi Team <team@ushahidi.com>
+ * @author Henry Addo
  */
 public class AppState implements State, SenderIdState, BuildState {
 
@@ -50,4 +50,5 @@ public class AppState implements State, SenderIdState, BuildState {
     public void onBuildStatusReceived(JenkinsBuildInfoJsonModel jenkinsBuildInfoModel) {
         mEventBus.post(new BuildStateEvent(jenkinsBuildInfoModel));
     }
+
 }

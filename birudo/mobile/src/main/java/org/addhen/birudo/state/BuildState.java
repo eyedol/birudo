@@ -20,9 +20,9 @@ import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
 
 public interface BuildState extends State {
 
-    public void onBuildStatusReceived(JenkinsBuildInfoJsonModel jenkinsBuildInfoModel);
+    void onBuildStatusReceived(JenkinsBuildInfoJsonModel jenkinsBuildInfoModel);
 
-    public static class BuildStateEvent {
+    class BuildStateEvent {
 
         private JenkinsBuildInfoJsonModel mJenkinsBuildInfoModel;
 

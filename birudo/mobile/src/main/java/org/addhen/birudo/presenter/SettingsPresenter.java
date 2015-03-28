@@ -32,6 +32,7 @@ import org.addhen.birudo.data.qualifier.Sound;
 import org.addhen.birudo.data.qualifier.Vibrate;
 import org.addhen.birudo.model.JenkinsUserModel;
 import org.addhen.birudo.model.mapper.JenkinsUserModelMapper;
+import org.addhen.birudo.state.AppConfigState;
 import org.addhen.birudo.state.SenderIdState;
 import org.addhen.birudo.view.IView;
 
@@ -87,6 +88,9 @@ public class SettingsPresenter implements Presenter {
     @Inject
     @Sound
     BooleanPreference mSoundPreference;
+
+    @Inject
+    AppConfigState mAppConfigState;
 
     private View mView;
 
@@ -148,12 +152,12 @@ public class SettingsPresenter implements Presenter {
 
     @Override
     public void resume() {
-
+        mAppConfigState.registerEvent(this);
     }
 
     @Override
     public void pause() {
-
+        mAppConfigState.unregisterEvent(this);
     }
 
     public interface View extends IView {

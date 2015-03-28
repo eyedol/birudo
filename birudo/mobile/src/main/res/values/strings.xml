@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Birudo</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_config_status">Application is not configured yet.</string>
     <string name="action_settings">Settings</string>
     <string name="scan_qr_code_title">Scan QR code</string>
     <string name="scan_qr_code_hint">Scan the QR Code from your jenkins screen to automatically configure the app with your Jenkins server.</string>

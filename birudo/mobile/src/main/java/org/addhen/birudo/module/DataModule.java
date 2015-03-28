@@ -210,7 +210,7 @@ public final class DataModule {
     }
 
     @Provides
-    public SenderIdState provideSendiIdState(AppState appState) {
+    public SenderIdState provideSenderIdState(AppState appState) {
         return appState;
     }
 
@@ -218,4 +218,5 @@ public final class DataModule {
     public BuildState provideBuildState(AppState appState) {
         return appState;
     }
+
 }

@@ -19,6 +19,8 @@ package org.addhen.birudo.ui.fragment;
 import org.addhen.birudo.BuildConfig;
 import org.addhen.birudo.R;
 import org.addhen.birudo.presenter.SettingsPresenter;
+import org.addhen.birudo.state.AppConfigState;
+import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.activity.BaseActivity;
 
 import android.app.Activity;
@@ -33,8 +35,8 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.view.View;
-import android.widget.Toast;
+
+import com.nispok.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
@@ -79,10 +81,14 @@ public class SettingsFragment extends PreferenceFragment
 
     private Preference mAbout;
 
+    @Inject
+    AppState mAppState;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
+        mSettingsPresenter.setView(this);
         Uri data = getActivity().getIntent().getData();
 
         if (data != null && data.toString().contains("jenkins_server")) {
@@ -146,30 +152,17 @@ public class SettingsFragment extends PreferenceFragment
         setPreference(getPreferenceScreen().getSharedPreferences());
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
     public void onResume() {
-        mSettingsPresenter.resume();
         super.onResume();
+        mSettingsPresenter.resume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     public void onPause() {
-        mSettingsPresenter.pause();
         super.onPause();
+        mSettingsPresenter.pause();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if(mSettingsPresenter !=null) {
-            mSettingsPresenter.setView(this);
-        }
     }
 
     @Override
@@ -283,7 +276,7 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public void showToast(int resId) {
-        Toast.makeText(getAppContext(), getText(resId), Toast.LENGTH_LONG).show();
+        Snackbar.with(getAppContext()).text(resId).show(getActivity());
     }
 
     @Override
