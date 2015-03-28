@@ -47,6 +47,9 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Inject
     AppState mAppState;
 
+    @Inject
+    LaunchActivity launch;
+
     private ObjectGraph activityScopeGraph;
 
     public BaseActivity(int layout, int menu) {

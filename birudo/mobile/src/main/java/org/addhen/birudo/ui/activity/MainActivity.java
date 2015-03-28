@@ -23,6 +23,7 @@ import com.squareup.otto.Subscribe;
 
 import org.addhen.birudo.R;
 import org.addhen.birudo.module.MainActivityModule;
+import org.addhen.birudo.presenter.MainPresenter;
 import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.fragment.ListJenkinsBuildInfoFragment;
 
@@ -33,9 +34,14 @@ import android.view.MenuItem;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MainActivity extends BaseActivity {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    @Inject
+    MainPresenter mPresenter;
 
     public MainActivity() {
         super(R.layout.activity_main, R.menu.menu_main);
@@ -47,6 +53,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             mListJenkinsBuildInfoFragment = ListJenkinsBuildInfoFragment.newInstance();
+            if(!mPresenter.isAppConfigured()) {
+                launch.settings();
+            }
             getFragmentManager().beginTransaction()
                     .replace(R.id.list_container, mListJenkinsBuildInfoFragment)
                     .commit();
@@ -70,8 +79,7 @@ public class MainActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            launch.settings();
             return true;
         }
 

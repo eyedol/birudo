@@ -212,10 +212,6 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
         }
     }
 
-    public boolean isAppConfigured() {
-        return mGcmTokenPreference != null && !TextUtils.isEmpty(mGcmTokenPreference.get());
-    }
-
     public void addJenkinsBuildInfo(JenkinsBuildInfoJsonModel jenkinsBuildInfoJsonModel) {
         JenkinsBuildInfo jenkinsBuildInfo = new JenkinsBuildInfo();
         jenkinsBuildInfo.setId(jenkinsBuildInfoJsonModel.getId());

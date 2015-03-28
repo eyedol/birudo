@@ -106,7 +106,6 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
     @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
-        mListJenkinsBuildInfoPresenter.isAppConfigured();
         mPendingList = new ArrayList<>();
         initRecyclerView();
         if (savedInstance != null) {

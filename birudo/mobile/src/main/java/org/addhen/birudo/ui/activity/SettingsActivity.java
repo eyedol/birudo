@@ -27,6 +27,7 @@ import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.fragment.SettingsFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -73,6 +74,10 @@ public class SettingsActivity extends BaseActivity implements ListJenkinsBuildIn
         mListJenkinsBuildInfoPresenter.refreshGcmToken();
     }
 
+
+    public static Intent getIntent(final Context context) {
+        return new Intent(context, SettingsActivity.class);
+    }
     protected List<Object> getModules() {
         List<Object> modules = new LinkedList<>();
         modules.add(new MainActivityModule());
