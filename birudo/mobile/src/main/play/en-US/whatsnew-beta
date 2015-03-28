@@ -1,0 +1,6 @@
+- Ability to manage build notifications.
+- Sends notification status to android wear.
+- Jenkins configuration management.
+- Fix bugs with build notification deletion.
+- Use Snackbar for display notifications.
+- Show notification when app is not configured to work with a Jenkins server.
