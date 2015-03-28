@@ -1,16 +1,15 @@
 package org.addhen.birudo.ui.activity;
 
-import org.addhen.birudo.data.qualifier.ActivityContext;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import org.addhen.birudo.data.qualifier.ActivityContext;
 
 import javax.inject.Inject;
 
 /**
  * Launches Activity. This is the main class for navigating through the app
- *
  */
 public class LaunchActivity {
     private final Context mContext;

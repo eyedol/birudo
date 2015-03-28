@@ -16,6 +16,12 @@
 
 package org.addhen.birudo.presenter;
 
+import android.content.SharedPreferences;
+
+import org.addhen.birudo.R;
+import org.addhen.birudo.core.entity.JenkinsUser;
+import org.addhen.birudo.core.usecase.ParseJenkinsUser;
+import org.addhen.birudo.core.usecase.ParseJenkinsUserUsecase;
 import org.addhen.birudo.data.pref.BooleanPreference;
 import org.addhen.birudo.data.pref.StringPreference;
 import org.addhen.birudo.data.qualifier.GcmToken;
@@ -24,10 +30,6 @@ import org.addhen.birudo.data.qualifier.JenkinsToken;
 import org.addhen.birudo.data.qualifier.JenkinsUsername;
 import org.addhen.birudo.data.qualifier.SenderId;
 import org.addhen.birudo.data.qualifier.Settings;
-import org.addhen.birudo.R;
-import org.addhen.birudo.core.entity.JenkinsUser;
-import org.addhen.birudo.core.usecase.ParseJenkinsUser;
-import org.addhen.birudo.core.usecase.ParseJenkinsUserUsecase;
 import org.addhen.birudo.data.qualifier.Sound;
 import org.addhen.birudo.data.qualifier.Vibrate;
 import org.addhen.birudo.model.JenkinsUserModel;
@@ -36,8 +38,6 @@ import org.addhen.birudo.state.AppConfigState;
 import org.addhen.birudo.state.SenderIdState;
 import org.addhen.birudo.view.IView;
 
-import android.content.SharedPreferences;
-
 import javax.inject.Inject;
 
 public class SettingsPresenter implements Presenter {
@@ -45,7 +45,26 @@ public class SettingsPresenter implements Presenter {
     private final ParseJenkinsUserUsecase mParseJenkinsUserUsecase;
 
     private final JenkinsUserModelMapper mJenkinsUserModelMapper;
-
+    @Inject
+    @JenkinsUsername
+    StringPreference mUsernamePreference;
+    @Inject
+    @JenkinsBaseUrl
+    StringPreference mUrlPreference;
+    @Inject
+    @SenderId
+    StringPreference mSenderIdPreference;
+    @Inject
+    @JenkinsToken
+    StringPreference mTokenPreference;
+    @Inject
+    @GcmToken
+    StringPreference mGcmPreference;
+    @Inject
+    @Settings
+    SharedPreferences mSharedPreferences;
+    @Inject
+    SenderIdState mSenderIdState;
     private final ParseJenkinsUserUsecase.Callback mCallback = new ParseJenkinsUser.Callback() {
         @Override
         public void jenkinsUserParsed(JenkinsUser jenkinsUser) {
@@ -53,34 +72,6 @@ public class SettingsPresenter implements Presenter {
             saveJenkinsUser(jenkinsUserModel);
         }
     };
-
-    @Inject
-    @JenkinsUsername
-    StringPreference mUsernamePreference;
-
-    @Inject
-    @JenkinsBaseUrl
-    StringPreference mUrlPreference;
-
-    @Inject
-    @SenderId
-    StringPreference mSenderIdPreference;
-
-    @Inject
-    @JenkinsToken
-    StringPreference mTokenPreference;
-
-    @Inject
-    @GcmToken
-    StringPreference mGcmPreference;
-
-    @Inject
-    @Settings
-    SharedPreferences mSharedPreferences;
-
-    @Inject
-    SenderIdState mSenderIdState;
-
     @Inject
     @Vibrate
     BooleanPreference mVibratePreference;
@@ -96,7 +87,7 @@ public class SettingsPresenter implements Presenter {
 
     @Inject
     public SettingsPresenter(ParseJenkinsUserUsecase parseJenkinsUserUsecase,
-            JenkinsUserModelMapper jenkinsUserModelMapper) {
+                             JenkinsUserModelMapper jenkinsUserModelMapper) {
         mParseJenkinsUserUsecase = parseJenkinsUserUsecase;
         mJenkinsUserModelMapper = jenkinsUserModelMapper;
     }

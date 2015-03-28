@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2015 Henry Addo
  *
@@ -64,20 +63,30 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
     private final AddJenkinsBuildInfoUsecase mAddJenkinsBuildInfoUsecase;
 
     private final DeleteJenkinsBuildInfoUsecase mDeleteJenkinsBuildInfoUsecase;
-
-    private final RequestGCMTokenUsecase.Callback mCallback = new RequestGCMToken.Callback() {
-        @Override
-        public void onGCMTokenRequested(String token) {
-            mGcmTokenPreference.set(token);
-            registerGcmToken();
-        }
-
-        @Override
-        public void onError(ErrorWrap error) {
-            mView.showMessage(error.getErrorMessage());
-        }
-    };
-
+    @Inject
+    GoogleCloudMessaging mGcm;
+    @Inject
+    @SenderId
+    StringPreference mSenderIdPreference;
+    @Inject
+    @GcmToken
+    StringPreference mGcmTokenPreference;
+    @Inject
+    @JenkinsUsername
+    StringPreference mJenkinsUsername;
+    @Inject
+    @JenkinsToken
+    StringPreference mJenkinsToken;
+    @Inject
+    @JenkinsBaseUrl
+    StringPreference mJenkinsBaseUrl;
+    @Inject
+    SenderIdState mSenderIdState;
+    @Inject
+    BuildState mBuildState;
+    @Inject
+    JenkinsBuildInfoModelMapper mJenkinsBuildInfoModelMapper;
+    private View mView;
     private final RegisterGCMTokenOnServerUsecase.Callback mRegisterGcmTokenOnServerCallback
             = new RegisterGCMTokenOnServerUsecase.Callback() {
 
@@ -96,20 +105,18 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
             mView.showMessage(error.getErrorMessage());
         }
     };
-
-    private final AddJenkinsBuildInfoUsecase.Callback mAddJenkinsBuildInfoCallback
-            = new AddJenkinsBuildInfo.Callback() {
+    private final RequestGCMTokenUsecase.Callback mCallback = new RequestGCMToken.Callback() {
         @Override
-        public void onJenkinsBuildInfoAdded() {
-            getJenkinBuildInfoList();
+        public void onGCMTokenRequested(String token) {
+            mGcmTokenPreference.set(token);
+            registerGcmToken();
         }
 
         @Override
-        public void onError(ErrorWrap errorWrap) {
-            showErrorMessage(errorWrap);
+        public void onError(ErrorWrap error) {
+            mView.showMessage(error.getErrorMessage());
         }
     };
-
     private final ListJenkinsBuildInfoUsecase.Callback mListJenkinsBuildInfoCallback
             = new ListJenkinsBuildInfo.Callback() {
         @Override
@@ -122,7 +129,18 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
             showErrorMessage(errorWrap);
         }
     };
+    private final AddJenkinsBuildInfoUsecase.Callback mAddJenkinsBuildInfoCallback
+            = new AddJenkinsBuildInfo.Callback() {
+        @Override
+        public void onJenkinsBuildInfoAdded() {
+            getJenkinBuildInfoList();
+        }
 
+        @Override
+        public void onError(ErrorWrap errorWrap) {
+            showErrorMessage(errorWrap);
+        }
+    };
     private final DeleteJenkinsBuildInfoUsecase.Callback mDeleteJenkinsBuildCallback
             = new DeleteJenkinsBuildInfo.Callback() {
         @Override
@@ -135,40 +153,6 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
             showErrorMessage(errorWrap);
         }
     };
-
-    @Inject
-    GoogleCloudMessaging mGcm;
-
-    @Inject
-    @SenderId
-    StringPreference mSenderIdPreference;
-
-    @Inject
-    @GcmToken
-    StringPreference mGcmTokenPreference;
-
-    @Inject
-    @JenkinsUsername
-    StringPreference mJenkinsUsername;
-
-    @Inject
-    @JenkinsToken
-    StringPreference mJenkinsToken;
-
-    @Inject
-    @JenkinsBaseUrl
-    StringPreference mJenkinsBaseUrl;
-
-    @Inject
-    SenderIdState mSenderIdState;
-
-    @Inject
-    BuildState mBuildState;
-
-    @Inject
-    JenkinsBuildInfoModelMapper mJenkinsBuildInfoModelMapper;
-
-    private View mView;
 
     @Inject
     public ListJenkinsBuildInfoPresenter(RequestGCMTokenUsecase requestGCMTokenUsecase,

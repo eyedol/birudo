@@ -16,10 +16,15 @@
 
 package org.addhen.birudo.module;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.squareup.otto.Bus;
 
+import org.addhen.birudo.core.repository.JenkinsBuildInfoRepository;
+import org.addhen.birudo.core.repository.JenkinsRepository;
+import org.addhen.birudo.core.task.ThreadExecutor;
 import org.addhen.birudo.data.database.JenkinsBuildInfoDatabaseHelper;
 import org.addhen.birudo.data.entity.mapper.JenkinsBuildInfoEntityDataMapper;
 import org.addhen.birudo.data.entity.mapper.JenkinsBuildInfoEntityJsonMapper;
@@ -38,17 +43,11 @@ import org.addhen.birudo.data.qualifier.Sound;
 import org.addhen.birudo.data.qualifier.Vibrate;
 import org.addhen.birudo.data.repository.JenkinsBuildInfoDataRepository;
 import org.addhen.birudo.data.repository.JenkinsDataRepository;
-import org.addhen.birudo.core.repository.JenkinsBuildInfoRepository;
-import org.addhen.birudo.core.repository.JenkinsRepository;
-import org.addhen.birudo.core.task.ThreadExecutor;
 import org.addhen.birudo.model.mapper.JenkinsBuildInfoModelMapper;
 import org.addhen.birudo.model.mapper.JenkinsUserModelMapper;
 import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.state.BuildState;
 import org.addhen.birudo.state.SenderIdState;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 
@@ -85,14 +84,14 @@ public final class DataModule {
     @Singleton
     @Vibrate
     BooleanPreference provideVibrationPreference(@Settings SharedPreferences prefs) {
-        return new BooleanPreference(prefs,"vibrate-pref", true);
+        return new BooleanPreference(prefs, "vibrate-pref", true);
     }
 
     @Provides
     @Singleton
     @Sound
     BooleanPreference provideSoundPreference(@Settings SharedPreferences prefs) {
-        return new BooleanPreference(prefs,"sound-pref", true);
+        return new BooleanPreference(prefs, "sound-pref", true);
     }
 
     @Provides
@@ -179,7 +178,7 @@ public final class DataModule {
     @Provides
     @Singleton
     JenkinsBuildInfoDatabaseHelper provideJenkinsBuildInfoDatabaseHelper(Context context,
-            ThreadExecutor threadExecutor) {
+                                                                         ThreadExecutor threadExecutor) {
         return JenkinsBuildInfoDatabaseHelper.getInstance(context, threadExecutor);
     }
 

@@ -16,6 +16,8 @@
 
 package org.addhen.birudo;
 
+import android.content.Context;
+
 import org.addhen.birudo.core.entity.JenkinsBuildInfoJson;
 import org.addhen.birudo.core.exception.ErrorWrap;
 import org.addhen.birudo.core.usecase.FetchBuildInfoUsecase;
@@ -26,8 +28,6 @@ import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
 import org.addhen.birudo.model.mapper.JenkinsBuildInfoJsonModelMapper;
 import org.addhen.birudo.state.BuildState;
 import org.addhen.birudo.ui.widget.BuildStateNotification;
-
-import android.content.Context;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,7 +60,7 @@ public class RetrieveJenkinsBuildInfo {
         public void onBuildInfoFetched(JenkinsBuildInfoJson buildInfo) {
             JenkinsBuildInfoJsonModel model = mJenkinsBuildInfoModelMapper.map(buildInfo);
 
-            if(model !=null) {
+            if (model != null) {
                 new BuildStateNotification()
                         .setNotification(mContext, mVibrate, mSound, model.getDisplayName(),
                                 model.getResult(),

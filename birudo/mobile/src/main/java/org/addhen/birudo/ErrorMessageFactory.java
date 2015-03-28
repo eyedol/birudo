@@ -17,11 +17,11 @@
 package org.addhen.birudo;
 
 
+import android.content.Context;
+
 import org.addhen.birudo.data.exception.JenkinsBuildInfoAddException;
 import org.addhen.birudo.data.exception.JenkinsBuildInfoNotFoundException;
 import org.addhen.birudo.data.exception.NetworkConnectionException;
-
-import android.content.Context;
 
 public class ErrorMessageFactory {
 

@@ -16,10 +16,10 @@
 
 package org.addhen.birudo.ui;
 
-import org.addhen.birudo.core.task.PostExecutionThread;
-
 import android.os.Handler;
 import android.os.Looper;
+
+import org.addhen.birudo.core.task.PostExecutionThread;
 
 public class UiThread implements PostExecutionThread {
 

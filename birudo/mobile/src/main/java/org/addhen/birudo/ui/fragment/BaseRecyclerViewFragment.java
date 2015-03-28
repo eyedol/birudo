@@ -16,13 +16,13 @@
 
 package org.addhen.birudo.ui.fragment;
 
-import org.addhen.birudo.model.Model;
-import org.addhen.birudo.ui.adapter.BaseRecyclerViewAdapter;
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
+
+import org.addhen.birudo.model.Model;
+import org.addhen.birudo.ui.adapter.BaseRecyclerViewAdapter;
 
 import butterknife.InjectView;
 import timber.log.Timber;
@@ -59,7 +59,7 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
     protected RecyclerView mRecyclerView;
 
     protected BaseRecyclerViewFragment(Class<L> adapterClass, int layout, int menu,
-            int recyclerViewId) {
+                                       int recyclerViewId) {
         super(layout, menu);
         mRecyclerViewAdapterClass = adapterClass;
         mRecyclerViewId = recyclerViewId;

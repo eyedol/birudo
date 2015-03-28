@@ -16,11 +16,10 @@
 
 package org.addhen.birudo.ui.adapter;
 
-import org.addhen.birudo.model.Model;
-
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
+
+import org.addhen.birudo.model.Model;
 
 import java.util.ArrayList;
 import java.util.List;

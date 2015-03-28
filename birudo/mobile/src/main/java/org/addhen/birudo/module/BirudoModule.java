@@ -16,9 +16,9 @@
 
 package org.addhen.birudo.module;
 
-import org.addhen.birudo.BirudoApplication;
-
 import android.content.Context;
+
+import org.addhen.birudo.BirudoApplication;
 
 import dagger.Module;
 import dagger.Provides;

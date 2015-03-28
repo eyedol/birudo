@@ -16,19 +16,19 @@
 
 package org.addhen.birudo.service;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import org.addhen.birudo.BirudoApplication;
-import org.addhen.birudo.RetrieveJenkinsBuildInfo;
-import org.addhen.birudo.module.MainActivityModule;
-import org.addhen.birudo.receiver.GcmBroadcastReceiver;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import org.addhen.birudo.BirudoApplication;
+import org.addhen.birudo.RetrieveJenkinsBuildInfo;
+import org.addhen.birudo.module.MainActivityModule;
+import org.addhen.birudo.receiver.GcmBroadcastReceiver;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +55,6 @@ public class GcmIntentService extends IntentService {
     public GcmIntentService() {
         super("GcmIntentService");
     }
-
 
 
     @Override

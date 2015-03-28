@@ -16,14 +16,14 @@
 
 package org.addhen.birudo.ui.activity;
 
-import org.addhen.birudo.BirudoApplication;
-import org.addhen.birudo.module.ActivityModule;
-import org.addhen.birudo.state.AppState;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.addhen.birudo.BirudoApplication;
+import org.addhen.birudo.module.ActivityModule;
+import org.addhen.birudo.state.AppState;
 
 import java.util.List;
 

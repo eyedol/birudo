@@ -16,16 +16,14 @@
 
 package org.addhen.birudo.util;
 
-import org.joda.time.Period;
-
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.util.Collection;
 import java.util.Date;
@@ -80,6 +78,6 @@ public class AppUtil {
 
     public static String formatDateTime(long timestamp) {
         Date date = new Date(timestamp);
-        return android.text.format.DateFormat.format("MMM dd, yyyy 'at' h:mm a",date).toString();
+        return android.text.format.DateFormat.format("MMM dd, yyyy 'at' h:mm a", date).toString();
     }
 }

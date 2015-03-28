@@ -31,7 +31,7 @@ public class InjectModule {
 
     @Provides
     FetchBuildInfoUsecase provideParseJenkinsUsecase(JenkinsRepository jenkinsRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                                     ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new FetchBuildInfoUsecase(jenkinsRepository, threadExecutor, postExecutionThread);
     }
 

@@ -16,9 +16,9 @@
 
 package org.addhen.birudo.module;
 
-import org.addhen.birudo.data.task.TaskExecutor;
 import org.addhen.birudo.core.task.PostExecutionThread;
 import org.addhen.birudo.core.task.ThreadExecutor;
+import org.addhen.birudo.data.task.TaskExecutor;
 import org.addhen.birudo.ui.UiThread;
 
 import javax.inject.Singleton;

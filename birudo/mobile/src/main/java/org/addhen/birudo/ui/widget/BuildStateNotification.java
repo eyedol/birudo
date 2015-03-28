@@ -16,14 +16,6 @@
 
 package org.addhen.birudo.ui.widget;
 
-import org.addhen.birudo.R;
-import org.addhen.birudo.data.pref.BooleanPreference;
-import org.addhen.birudo.data.qualifier.Sound;
-import org.addhen.birudo.data.qualifier.Vibrate;
-import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
-import org.addhen.birudo.ui.activity.MainActivity;
-import org.addhen.birudo.util.AppUtil;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,10 +25,18 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.NotificationCompat;
 
+import org.addhen.birudo.R;
+import org.addhen.birudo.data.pref.BooleanPreference;
+import org.addhen.birudo.data.qualifier.Sound;
+import org.addhen.birudo.data.qualifier.Vibrate;
+import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
+import org.addhen.birudo.ui.activity.MainActivity;
+import org.addhen.birudo.util.AppUtil;
+
 public class BuildStateNotification {
 
     public void setNotification(Context context, @Vibrate BooleanPreference vibrate, @Sound BooleanPreference sound, String message,
-            JenkinsBuildInfoJsonModel.Result result, long duration) {
+                                JenkinsBuildInfoJsonModel.Result result, long duration) {
 
         Intent pendingIntent = new Intent(context, MainActivity.class);
         PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, pendingIntent,
@@ -79,7 +79,7 @@ public class BuildStateNotification {
             notify.defaults |= Notification.DEFAULT_VIBRATE;
         }
 
-        if(sound.get()) {
+        if (sound.get()) {
             notify.defaults |= Notification.DEFAULT_SOUND;
         }
 

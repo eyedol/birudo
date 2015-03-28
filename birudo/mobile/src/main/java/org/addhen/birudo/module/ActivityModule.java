@@ -16,10 +16,10 @@
 
 package org.addhen.birudo.module;
 
-import org.addhen.birudo.data.qualifier.ActivityContext;
-
 import android.app.Activity;
 import android.content.Context;
+
+import org.addhen.birudo.data.qualifier.ActivityContext;
 
 import dagger.Module;
 import dagger.Provides;

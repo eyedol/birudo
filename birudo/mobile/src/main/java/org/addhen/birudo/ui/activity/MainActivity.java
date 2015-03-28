@@ -16,9 +16,11 @@
 
 package org.addhen.birudo.ui.activity;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import com.squareup.otto.Subscribe;
 
 import org.addhen.birudo.R;
@@ -26,10 +28,6 @@ import org.addhen.birudo.module.MainActivityModule;
 import org.addhen.birudo.presenter.MainPresenter;
 import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.fragment.ListJenkinsBuildInfoFragment;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,12 +40,11 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     MainPresenter mPresenter;
+    ListJenkinsBuildInfoFragment mListJenkinsBuildInfoFragment;
 
     public MainActivity() {
         super(R.layout.activity_main, R.menu.menu_main);
     }
-
-    ListJenkinsBuildInfoFragment mListJenkinsBuildInfoFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

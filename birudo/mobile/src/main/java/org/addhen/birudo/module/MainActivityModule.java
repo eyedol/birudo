@@ -16,9 +16,6 @@
 
 package org.addhen.birudo.module;
 
-import android.content.Context;
-
-import org.addhen.birudo.RetrieveJenkinsBuildInfo;
 import org.addhen.birudo.core.repository.JenkinsBuildInfoRepository;
 import org.addhen.birudo.core.repository.JenkinsRepository;
 import org.addhen.birudo.core.task.PostExecutionThread;
@@ -51,13 +48,13 @@ public class MainActivityModule {
     @Provides
     @Singleton
     RequestGCMTokenUsecase provideRequestGcmToken(JenkinsRepository jenkinsRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                                  ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new RequestGCMTokenUsecase(jenkinsRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides
     ParseJenkinsUserUsecase provideParseJenkinsUsecase(JenkinsRepository jenkinsRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                                       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new ParseJenkinsUserUsecase(jenkinsRepository, threadExecutor, postExecutionThread);
     }
 
@@ -99,7 +96,7 @@ public class MainActivityModule {
 
     @Provides
     FetchBuildInfoUsecase provideFetchBuildInfoUsecase(JenkinsRepository jenkinsRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                                       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new FetchBuildInfoUsecase(jenkinsRepository, threadExecutor, postExecutionThread);
     }
 }

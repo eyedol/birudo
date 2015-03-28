@@ -16,12 +16,7 @@
 
 package org.addhen.birudo.ui.adapter;
 
-import org.addhen.birudo.R;
-import org.addhen.birudo.model.JenkinsBuildInfoModel;
-import org.addhen.birudo.util.AppUtil;
-
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -29,11 +24,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.addhen.birudo.R;
+import org.addhen.birudo.model.JenkinsBuildInfoModel;
+import org.addhen.birudo.util.AppUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuildInfoModel> {
 
+    private SparseBooleanArray mSelectedItems;
     RecyclerviewViewHolder mRecyclerviewViewHolder = new RecyclerviewViewHolder() {
 
         Context context;
@@ -78,8 +78,6 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
         }
     };
 
-    private SparseBooleanArray mSelectedItems;
-
     public JenkinsBuildInfoAdapter() {
         this.setRecyclerviewViewHolder(mRecyclerviewViewHolder);
         setHasStableIds(true);
@@ -112,7 +110,7 @@ public class JenkinsBuildInfoAdapter extends BaseRecyclerViewAdapter<JenkinsBuil
         return items;
     }
 
-    public boolean isChecked(int position){
+    public boolean isChecked(int position) {
         return mSelectedItems.get(position, false);
     }
 

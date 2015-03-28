@@ -16,6 +16,10 @@
 
 package org.addhen.birudo.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.nispok.snackbar.Snackbar;
 import com.squareup.otto.Subscribe;
 
@@ -24,13 +28,8 @@ import org.addhen.birudo.model.JenkinsBuildInfoModel;
 import org.addhen.birudo.module.MainActivityModule;
 import org.addhen.birudo.presenter.ListJenkinsBuildInfoPresenter;
 import org.addhen.birudo.presenter.MainPresenter;
-import org.addhen.birudo.state.AppConfigState;
 import org.addhen.birudo.state.AppState;
 import org.addhen.birudo.ui.fragment.SettingsFragment;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +37,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class SettingsActivity extends BaseActivity implements ListJenkinsBuildInfoPresenter.View{
+public class SettingsActivity extends BaseActivity implements ListJenkinsBuildInfoPresenter.View {
 
     @Inject
     ListJenkinsBuildInfoPresenter mListJenkinsBuildInfoPresenter;
@@ -47,12 +46,16 @@ public class SettingsActivity extends BaseActivity implements ListJenkinsBuildIn
         super(R.layout.settings, 0);
     }
 
+    public static Intent getIntent(final Context context) {
+        return new Intent(context, SettingsActivity.class);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListJenkinsBuildInfoPresenter.setView(this);
         Bundle bundle = getIntent().getExtras();
-        if(bundle !=null) {
+        if (bundle != null) {
             boolean isConfigured = bundle.getBoolean(MainPresenter.SETTINGS_BUNDLE);
             if (!isConfigured) {
                 showMessage(getText(R.string.app_config_status).toString());
@@ -80,10 +83,6 @@ public class SettingsActivity extends BaseActivity implements ListJenkinsBuildIn
         mListJenkinsBuildInfoPresenter.refreshGcmToken();
     }
 
-
-    public static Intent getIntent(final Context context) {
-        return new Intent(context, SettingsActivity.class);
-    }
     protected List<Object> getModules() {
         List<Object> modules = new LinkedList<>();
         modules.add(new MainActivityModule());

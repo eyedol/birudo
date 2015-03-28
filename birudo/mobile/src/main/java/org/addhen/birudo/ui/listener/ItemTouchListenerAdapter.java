@@ -42,7 +42,7 @@ import android.view.View;
  * As RecyclerView does not have standard way to add click listeners to the items, this
  * RecyclerView.OnItemTouchListener intercepts touch events and translates them to simple
  * onItemClick and onItemLongClick callbacks.
- *
+ * <p/>
  * Simply add it as follows:
  * <pre>
  * {@code
@@ -62,7 +62,7 @@ public class ItemTouchListenerAdapter extends GestureDetector.SimpleOnGestureLis
     private GestureDetector gestureDetector;
 
     public ItemTouchListenerAdapter(RecyclerView recyclerView,
-            RecyclerViewOnItemClickListener listener) {
+                                    RecyclerViewOnItemClickListener listener) {
         if (recyclerView == null || listener == null) {
             throw new IllegalArgumentException(
                     "RecyclerView and Listener arguments can not be null");

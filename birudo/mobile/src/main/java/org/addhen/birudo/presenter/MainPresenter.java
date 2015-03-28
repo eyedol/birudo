@@ -23,7 +23,7 @@ public class MainPresenter implements Presenter {
     LaunchActivity launchActivity;
 
     @Inject
-    public MainPresenter(@GcmToken StringPreference gcmTokenPreference){
+    public MainPresenter(@GcmToken StringPreference gcmTokenPreference) {
         mGcmTokenPreference = gcmTokenPreference;
     }
 
@@ -33,7 +33,7 @@ public class MainPresenter implements Presenter {
 
     @Override
     public void resume() {
-        if(!isAppConfigured()) {
+        if (!isAppConfigured()) {
             Bundle bundle = new Bundle();
             bundle.putBoolean(SETTINGS_BUNDLE, false);
             launchActivity.settings(bundle);

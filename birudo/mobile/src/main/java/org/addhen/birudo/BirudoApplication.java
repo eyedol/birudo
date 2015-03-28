@@ -16,11 +16,11 @@
 
 package org.addhen.birudo;
 
+import android.app.Application;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.addhen.birudo.module.BirudoModule;
-
-import android.app.Application;
 
 import java.util.List;
 

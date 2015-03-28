@@ -60,27 +60,18 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         JenkinsBuildInfoAdapter> implements ListJenkinsBuildInfoPresenter.View, ActionMode.Callback,
         ItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
+    private static final String CAB_ENABLED = "can_enabled";
+    private static final String SELECTED_ITEMS = "selected_items";
     private static ListJenkinsBuildInfoFragment mListJenkinsBuildInfoFragment;
-
     @Inject
     ListJenkinsBuildInfoPresenter mListJenkinsBuildInfoPresenter;
-
     @InjectView(android.R.id.empty)
     TextView mEmptyView;
-
     @Inject
     RetrieveJenkinsBuildInfo mRetrieveJenkinsBuildInfo;
-
     private SwipeToDismissTouchListener mSwipeToDismissTouchListener;
-
     private ActionMode mActionMode;
-
     private List<PendingDeletedJenkinsBuildInfoModel> mPendingList;
-
-    private static final String CAB_ENABLED = "can_enabled";
-
-    private static final String SELECTED_ITEMS = "selected_items";
-
     private boolean isCabEnabled = false;
 
     private ArrayList<Integer> selectedItemPositions;
@@ -157,8 +148,8 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         }
 
         // Toggle selection based on the saved state
-        if(selectedItemPositions !=null) {
-            for(Integer position: selectedItemPositions) {
+        if (selectedItemPositions != null) {
+            for (Integer position : selectedItemPositions) {
                 toggleSelection(position);
             }
         }
@@ -391,7 +382,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
         mRecyclerViewAdapter.clearSelections();
         mActionMode = null;
         isCabEnabled = false;
-        if(selectedItemPositions !=null) {
+        if (selectedItemPositions != null) {
             selectedItemPositions.clear();
         }
     }

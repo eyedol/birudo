@@ -16,13 +16,6 @@
 
 package org.addhen.birudo.ui.fragment;
 
-import org.addhen.birudo.BuildConfig;
-import org.addhen.birudo.R;
-import org.addhen.birudo.presenter.SettingsPresenter;
-import org.addhen.birudo.state.AppConfigState;
-import org.addhen.birudo.state.AppState;
-import org.addhen.birudo.ui.activity.BaseActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -37,6 +30,12 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.nispok.snackbar.Snackbar;
+
+import org.addhen.birudo.BuildConfig;
+import org.addhen.birudo.R;
+import org.addhen.birudo.presenter.SettingsPresenter;
+import org.addhen.birudo.state.AppState;
+import org.addhen.birudo.ui.activity.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -72,17 +71,12 @@ public class SettingsFragment extends PreferenceFragment
 
     @Inject
     SettingsPresenter mSettingsPresenter;
-
-    private EditTextPreference mJenkinsUsername;
-
-    private EditTextPreference mJenkinsBaseUrl;
-
-    private EditTextPreference mGCMSenderId;
-
-    private Preference mAbout;
-
     @Inject
     AppState mAppState;
+    private EditTextPreference mJenkinsUsername;
+    private EditTextPreference mJenkinsBaseUrl;
+    private EditTextPreference mGCMSenderId;
+    private Preference mAbout;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -145,7 +139,7 @@ public class SettingsFragment extends PreferenceFragment
                     getString(R.string.gcm_token_summary, mSettingsPresenter.getGcmToken()));
         }
 
-        if(mAbout !=null) {
+        if (mAbout != null) {
             mAbout.setSummary(BuildConfig.VERSION_NAME);
         }
 
@@ -174,12 +168,12 @@ public class SettingsFragment extends PreferenceFragment
             mSettingsPresenter.refreshGcmToken();
         }
 
-        if(key.equals(SETTINGS_KEY_VIBRATE)) {
+        if (key.equals(SETTINGS_KEY_VIBRATE)) {
             final boolean status = sharedPreferences.getBoolean(SETTINGS_KEY_VIBRATE, false);
             mSettingsPresenter.saveVibrationSettings(status);
         }
 
-        if(key.equals(SETTINGS_KEY_SOUND)) {
+        if (key.equals(SETTINGS_KEY_SOUND)) {
             final boolean status = sharedPreferences.getBoolean(SETTINGS_KEY_SOUND, false);
             mSettingsPresenter.saveSoundSettings(status);
         }
@@ -187,11 +181,11 @@ public class SettingsFragment extends PreferenceFragment
 
     private void setPreference(SharedPreferences sharedPreferences) {
 
-            final boolean vibrateStatus = sharedPreferences.getBoolean(SETTINGS_KEY_VIBRATE, false);
-            mSettingsPresenter.saveVibrationSettings(vibrateStatus);
+        final boolean vibrateStatus = sharedPreferences.getBoolean(SETTINGS_KEY_VIBRATE, false);
+        mSettingsPresenter.saveVibrationSettings(vibrateStatus);
 
-            final boolean soundStatus = sharedPreferences.getBoolean(SETTINGS_KEY_SOUND, false);
-            mSettingsPresenter.saveSoundSettings(soundStatus);
+        final boolean soundStatus = sharedPreferences.getBoolean(SETTINGS_KEY_SOUND, false);
+        mSettingsPresenter.saveSoundSettings(soundStatus);
 
     }
 

@@ -16,8 +16,6 @@
 
 package org.addhen.birudo.ui.fragment;
 
-import org.addhen.birudo.ui.activity.BaseActivity;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -28,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import org.addhen.birudo.ui.activity.BaseActivity;
 
 import butterknife.ButterKnife;
 
@@ -78,7 +78,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
         android.view.View root = null;
         if (mLayout != 0) {
             root = inflater.inflate(mLayout, container, false);
