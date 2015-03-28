@@ -18,8 +18,6 @@ package org.addhen.birudo.state;
 
 import com.squareup.otto.Bus;
 
-import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
-
 /**
  * @author Henry Addo
  */
@@ -47,8 +45,8 @@ public class AppState implements State, SenderIdState, BuildState {
     }
 
     @Override
-    public void onBuildStatusReceived(JenkinsBuildInfoJsonModel jenkinsBuildInfoModel) {
-        mEventBus.post(new BuildStateEvent(jenkinsBuildInfoModel));
+    public void onBuildStatusReceived() {
+        mEventBus.post(new BuildStateEvent());
     }
 
 }

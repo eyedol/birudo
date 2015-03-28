@@ -39,7 +39,6 @@ import org.addhen.birudo.data.qualifier.JenkinsBaseUrl;
 import org.addhen.birudo.data.qualifier.JenkinsToken;
 import org.addhen.birudo.data.qualifier.JenkinsUsername;
 import org.addhen.birudo.data.qualifier.SenderId;
-import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
 import org.addhen.birudo.model.JenkinsBuildInfoModel;
 import org.addhen.birudo.model.JenkinsUserModel;
 import org.addhen.birudo.model.mapper.JenkinsBuildInfoModelMapper;
@@ -60,33 +59,42 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
 
     private final ListJenkinsBuildInfoUsecase mListJenkinsBuildInfoUsecase;
 
-    private final AddJenkinsBuildInfoUsecase mAddJenkinsBuildInfoUsecase;
-
     private final DeleteJenkinsBuildInfoUsecase mDeleteJenkinsBuildInfoUsecase;
+
     @Inject
     GoogleCloudMessaging mGcm;
+
     @Inject
     @SenderId
     StringPreference mSenderIdPreference;
+
     @Inject
     @GcmToken
     StringPreference mGcmTokenPreference;
+
     @Inject
     @JenkinsUsername
     StringPreference mJenkinsUsername;
+
     @Inject
     @JenkinsToken
     StringPreference mJenkinsToken;
+
     @Inject
     @JenkinsBaseUrl
     StringPreference mJenkinsBaseUrl;
+
     @Inject
     SenderIdState mSenderIdState;
+
     @Inject
     BuildState mBuildState;
+
     @Inject
     JenkinsBuildInfoModelMapper mJenkinsBuildInfoModelMapper;
+
     private View mView;
+
     private final RegisterGCMTokenOnServerUsecase.Callback mRegisterGcmTokenOnServerCallback
             = new RegisterGCMTokenOnServerUsecase.Callback() {
 
@@ -158,13 +166,11 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
     public ListJenkinsBuildInfoPresenter(RequestGCMTokenUsecase requestGCMTokenUsecase,
                                          RegisterGCMTokenOnServerUsecase registerGCMTokenOnServerUsecase,
                                          ListJenkinsBuildInfoUsecase listJenkinsBuildInfoUsecase,
-                                         DeleteJenkinsBuildInfoUsecase deleteJenkinsBuildInfoUsecase,
-                                         AddJenkinsBuildInfoUsecase addJenkinsBuildInfoUsecase) {
+                                         DeleteJenkinsBuildInfoUsecase deleteJenkinsBuildInfoUsecase) {
         mRequestGCMTokenUsecase = requestGCMTokenUsecase;
         mRegisterGCMTokenOnServerUsecase = registerGCMTokenOnServerUsecase;
         mListJenkinsBuildInfoUsecase = listJenkinsBuildInfoUsecase;
         mDeleteJenkinsBuildInfoUsecase = deleteJenkinsBuildInfoUsecase;
-        mAddJenkinsBuildInfoUsecase = addJenkinsBuildInfoUsecase;
     }
 
     public void setView(View view) {
@@ -194,25 +200,6 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
         }
     }
 
-    public void addJenkinsBuildInfo(JenkinsBuildInfoJsonModel jenkinsBuildInfoJsonModel) {
-        JenkinsBuildInfo jenkinsBuildInfo = new JenkinsBuildInfo();
-        jenkinsBuildInfo.setId(jenkinsBuildInfoJsonModel.getId());
-        jenkinsBuildInfo.setDuration(jenkinsBuildInfoJsonModel.getDuration());
-        jenkinsBuildInfo.setTimestamp(jenkinsBuildInfoJsonModel.getTimestamp());
-        jenkinsBuildInfo.setResult(
-                JenkinsBuildInfo.Result.valueOf(jenkinsBuildInfoJsonModel.getResult().name()));
-        jenkinsBuildInfo.setUrl(jenkinsBuildInfoJsonModel.getUrl());
-        final String userName =
-                jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0).getUserId() != null
-                        ? jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0)
-                        .getUserId()
-                        : jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0)
-                        .getAddr();
-        jenkinsBuildInfo.setUserName(userName);
-        jenkinsBuildInfo.setDisplayName(jenkinsBuildInfoJsonModel.getDisplayName());
-        mAddJenkinsBuildInfoUsecase.execute(jenkinsBuildInfo, mAddJenkinsBuildInfoCallback);
-    }
-
     private void showErrorMessage(ErrorWrap errorWrap) {
         String errorMessage = ErrorMessageFactory.create(mView.getAppContext(),
                 errorWrap.getException());
@@ -238,7 +225,7 @@ public class ListJenkinsBuildInfoPresenter implements Presenter {
         mBuildState.unregisterEvent(this);
     }
 
-    private void getJenkinBuildInfoList() {
+    public void getJenkinBuildInfoList() {
         mListJenkinsBuildInfoUsecase.execute(mListJenkinsBuildInfoCallback);
     }
 

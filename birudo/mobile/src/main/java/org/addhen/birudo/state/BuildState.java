@@ -16,22 +16,10 @@
 
 package org.addhen.birudo.state;
 
-import org.addhen.birudo.model.JenkinsBuildInfoJsonModel;
-
 public interface BuildState extends State {
 
-    void onBuildStatusReceived(JenkinsBuildInfoJsonModel jenkinsBuildInfoModel);
+    void onBuildStatusReceived();
 
     class BuildStateEvent {
-
-        private JenkinsBuildInfoJsonModel mJenkinsBuildInfoModel;
-
-        public BuildStateEvent(JenkinsBuildInfoJsonModel jenkinsBuildInfoModel) {
-            mJenkinsBuildInfoModel = jenkinsBuildInfoModel;
-        }
-
-        public JenkinsBuildInfoJsonModel getJenkinsBuildInfoModel() {
-            return mJenkinsBuildInfoModel;
-        }
     }
 }

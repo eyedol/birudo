@@ -18,8 +18,10 @@ package org.addhen.birudo;
 
 import android.content.Context;
 
+import org.addhen.birudo.core.entity.JenkinsBuildInfo;
 import org.addhen.birudo.core.entity.JenkinsBuildInfoJson;
 import org.addhen.birudo.core.exception.ErrorWrap;
+import org.addhen.birudo.core.usecase.AddJenkinsBuildInfoUsecase;
 import org.addhen.birudo.core.usecase.FetchBuildInfoUsecase;
 import org.addhen.birudo.data.pref.BooleanPreference;
 import org.addhen.birudo.data.qualifier.Sound;
@@ -38,6 +40,9 @@ public class RetrieveJenkinsBuildInfo {
 
     @Inject
     FetchBuildInfoUsecase mFetchBuildInfoUsecase;
+
+    @Inject
+    AddJenkinsBuildInfoUsecase mAddJenkinsBuildInfoUsecase;
 
     @Inject
     BuildState mBuildState;
@@ -65,13 +70,25 @@ public class RetrieveJenkinsBuildInfo {
                         .setNotification(mContext, mVibrate, mSound, model.getDisplayName(),
                                 model.getResult(),
                                 model.getDuration());
-
-                mBuildState.onBuildStatusReceived(model);
+                addJenkinsBuildInfo(model);
             }
         }
 
         @Override
         public void onError(ErrorWrap error) {
+
+        }
+    };
+
+    private final AddJenkinsBuildInfoUsecase.Callback mAddJenkinsBuildInfoCallback = new AddJenkinsBuildInfoUsecase.Callback() {
+
+        @Override
+        public void onJenkinsBuildInfoAdded() {
+            mBuildState.onBuildStatusReceived();
+        }
+
+        @Override
+        public void onError(ErrorWrap errorWrap) {
 
         }
     };
@@ -91,5 +108,24 @@ public class RetrieveJenkinsBuildInfo {
                 mFetchBuildInfoUsecase.executed(url, mCallback);
             }
         }
+    }
+
+    private void addJenkinsBuildInfo(JenkinsBuildInfoJsonModel jenkinsBuildInfoJsonModel) {
+        JenkinsBuildInfo jenkinsBuildInfo = new JenkinsBuildInfo();
+        jenkinsBuildInfo.setId(jenkinsBuildInfoJsonModel.getId());
+        jenkinsBuildInfo.setDuration(jenkinsBuildInfoJsonModel.getDuration());
+        jenkinsBuildInfo.setTimestamp(jenkinsBuildInfoJsonModel.getTimestamp());
+        jenkinsBuildInfo.setResult(
+                JenkinsBuildInfo.Result.valueOf(jenkinsBuildInfoJsonModel.getResult().name()));
+        jenkinsBuildInfo.setUrl(jenkinsBuildInfoJsonModel.getUrl());
+        final String userName =
+                jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0).getUserId() != null
+                        ? jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0)
+                        .getUserId()
+                        : jenkinsBuildInfoJsonModel.getActions().get(1).getCauses().get(0)
+                        .getAddr();
+        jenkinsBuildInfo.setUserName(userName);
+        jenkinsBuildInfo.setDisplayName(jenkinsBuildInfoJsonModel.getDisplayName());
+        mAddJenkinsBuildInfoUsecase.execute(jenkinsBuildInfo, mAddJenkinsBuildInfoCallback);
     }
 }

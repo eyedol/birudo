@@ -34,6 +34,7 @@ import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.listeners.ActionClickListener;
 import com.nispok.snackbar.listeners.EventListener;
+import com.squareup.otto.Subscribe;
 
 import org.addhen.birudo.R;
 import org.addhen.birudo.RetrieveJenkinsBuildInfo;
@@ -295,6 +296,7 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
      * To be called by the activity holding this fragment so it causes the GCM Token
      * refresh.
      */
+    @Subscribe
     public void onSenderIdChange() {
         mListJenkinsBuildInfoPresenter.refreshGcmToken();
     }
@@ -305,8 +307,9 @@ public class ListJenkinsBuildInfoFragment extends BaseRecyclerViewFragment<Jenki
      *
      * @param event The {@link org.addhen.birudo.state.BuildState.BuildStateEvent} event triggered.
      */
+    @Subscribe
     public void onJenkinsBuildInfoFetched(AppState.BuildStateEvent event) {
-        mListJenkinsBuildInfoPresenter.addJenkinsBuildInfo(event.getJenkinsBuildInfoModel());
+        mListJenkinsBuildInfoPresenter.getJenkinBuildInfoList();
     }
 
 
