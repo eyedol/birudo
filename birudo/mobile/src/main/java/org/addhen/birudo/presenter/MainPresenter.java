@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import org.addhen.birudo.data.pref.StringPreference;
 import org.addhen.birudo.data.qualifier.GcmToken;
+import org.addhen.birudo.ui.activity.LaunchActivity;
 
 import javax.inject.Inject;
 
@@ -16,17 +17,22 @@ public class MainPresenter implements Presenter {
     StringPreference mGcmTokenPreference;
 
     @Inject
+    LaunchActivity launchActivity;
+
+    @Inject
     public MainPresenter(@GcmToken StringPreference gcmTokenPreference){
         mGcmTokenPreference = gcmTokenPreference;
     }
 
-    public boolean isAppConfigured() {
+    private boolean isAppConfigured() {
         return mGcmTokenPreference != null && !TextUtils.isEmpty(mGcmTokenPreference.get());
     }
 
     @Override
     public void resume() {
-        // Do nothing
+        if(!isAppConfigured()) {
+            launchActivity.settings();
+        }
     }
 
     @Override

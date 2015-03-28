@@ -53,9 +53,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             mListJenkinsBuildInfoFragment = ListJenkinsBuildInfoFragment.newInstance();
-            if(!mPresenter.isAppConfigured()) {
-                launch.settings();
-            }
             getFragmentManager().beginTransaction()
                     .replace(R.id.list_container, mListJenkinsBuildInfoFragment)
                     .commit();
@@ -89,6 +86,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mPresenter.resume();
         // Check device for Play Services APK.
         checkPlayServices();
     }

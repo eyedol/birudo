@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.view.View;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -81,7 +82,7 @@ public class SettingsFragment extends PreferenceFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        injectDependencies();
         Uri data = getActivity().getIntent().getData();
 
         if (data != null && data.toString().contains("jenkins_server")) {
@@ -148,8 +149,6 @@ public class SettingsFragment extends PreferenceFragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        injectDependencies();
-        mSettingsPresenter.setView(this);
     }
 
     public void onResume() {
@@ -163,6 +162,14 @@ public class SettingsFragment extends PreferenceFragment
         super.onPause();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(mSettingsPresenter !=null) {
+            mSettingsPresenter.setView(this);
+        }
     }
 
     @Override
