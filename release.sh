@@ -3,8 +3,8 @@
 
 if [[ $# -lt 3 ]]
 then
-  echo "Usage: release.sh [Scope; valid are major,minor,patch] [Stage; valid are final, milestone, dev] [Track; valid are alpha, production, beta]"
-  echo "Eg. command ./release minor milestone alpha"
+  echo "Usage: release.sh [Scope; valid are major,minor,patch] [Stage; valid are dev, alpha, beta, rc, final] [Track; valid are alpha, beta, production]"
+  echo "Eg. command ./release minor beta alpha"
   exit
 fi
 
