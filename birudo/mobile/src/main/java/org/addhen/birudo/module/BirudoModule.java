@@ -16,7 +16,7 @@
 
 package org.addhen.birudo.module;
 
-import org.addhen.birudo.BirudoroguApplication;
+import org.addhen.birudo.BirudoApplication;
 
 import android.content.Context;
 
@@ -29,13 +29,13 @@ import dagger.Provides;
                 ExecutorModule.class,
         },
         injects = {
-                BirudoroguApplication.class
+                BirudoApplication.class
         }, library = true)
-public final class BirudoroguModule {
+public final class BirudoModule {
 
     private final Context mContext;
 
-    public BirudoroguModule(Context context) {
+    public BirudoModule(Context context) {
         mContext = context;
     }
 

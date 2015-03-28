@@ -12,7 +12,7 @@
             android:protectionLevel="signature"/>
     <uses-permission android:name="org.addhen.birudo.permission.C2D_MESSAGE"/>
     <application
-            android:name=".BirudoroguApplication"
+            android:name=".BirudoApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"

@@ -24,7 +24,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(addsTo = BirudoroguModule.class, library = true)
+@Module(addsTo = BirudoModule.class, library = true)
 public final class ActivityModule {
 
     private final Activity mActivity;

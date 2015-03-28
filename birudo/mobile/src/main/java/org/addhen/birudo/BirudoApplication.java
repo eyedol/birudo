@@ -18,7 +18,7 @@ package org.addhen.birudo;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import org.addhen.birudo.module.BirudoroguModule;
+import org.addhen.birudo.module.BirudoModule;
 
 import android.app.Application;
 
@@ -27,7 +27,7 @@ import java.util.List;
 import dagger.ObjectGraph;
 import timber.log.Timber;
 
-public class BirudoroguApplication extends Application {
+public class BirudoApplication extends Application {
 
     private ObjectGraph mObjectGraph;
 
@@ -61,7 +61,7 @@ public class BirudoroguApplication extends Application {
     }
 
     private void initializeDependencyInjector() {
-        mObjectGraph = ObjectGraph.create(new BirudoroguModule(this));
+        mObjectGraph = ObjectGraph.create(new BirudoModule(this));
         mObjectGraph.inject(this);
         mObjectGraph.injectStatics();
     }

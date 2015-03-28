@@ -16,7 +16,7 @@
 
 package org.addhen.birudo.ui.activity;
 
-import org.addhen.birudo.BirudoroguApplication;
+import org.addhen.birudo.BirudoApplication;
 import org.addhen.birudo.module.ActivityModule;
 import org.addhen.birudo.state.AppState;
 
@@ -105,7 +105,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     private void injectDependencies() {
 
-        BirudoroguApplication application = (BirudoroguApplication) getApplication();
+        BirudoApplication application = (BirudoApplication) getApplication();
 
         List<Object> activityScopeModules = getModules();
 
