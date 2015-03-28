@@ -59,6 +59,8 @@ public class SettingsFragment extends PreferenceFragment
 
     public static final String SETTINGS_KEY_JENKINS_USERNAME = "jenkins_username";
 
+    public static final String SETTINGS_KEY_JENKINS_API_TOKEN = "jenkins_token";
+
     public static final String SETTINGS_KEY_VIBRATE = "notification_vibrate_key";
 
     public static final String SETTINGS_KEY_SOUND = "notification_sound_key";
@@ -74,6 +76,7 @@ public class SettingsFragment extends PreferenceFragment
     @Inject
     AppState mAppState;
     private EditTextPreference mJenkinsUsername;
+    private EditTextPreference mJenkinsApiToken;
     private EditTextPreference mJenkinsBaseUrl;
     private EditTextPreference mGCMSenderId;
     private Preference mAbout;
@@ -111,6 +114,8 @@ public class SettingsFragment extends PreferenceFragment
                 .findPreference(SETTINGS_KEY_GCM_SENDER_ID);
         mJenkinsUsername = (EditTextPreference) getPreferenceScreen()
                 .findPreference(SETTINGS_KEY_JENKINS_USERNAME);
+        mJenkinsApiToken = (EditTextPreference) getPreferenceScreen()
+                .findPreference(SETTINGS_KEY_JENKINS_API_TOKEN);
         mJenkinsBaseUrl = (EditTextPreference) getPreferenceScreen()
                 .findPreference(SETTINGS_KEY_JENKINS_URL);
 
@@ -120,23 +125,43 @@ public class SettingsFragment extends PreferenceFragment
 
         if (mGCMSenderId != null) {
             mGCMSenderId.setText(mSettingsPresenter.getGcmSenderId());
-            mGCMSenderId.setSummary(
-                    getString(R.string.gcm_sender_id_summary, mSettingsPresenter.getGcmSenderId()));
+
+            if(mSettingsPresenter.getGcmSenderId() !=null) {
+                mGCMSenderId.setSummary(
+                        getString(R.string.gcm_sender_id_summary, mSettingsPresenter.getGcmSenderId()));
+            }
         }
 
         if (mJenkinsUsername != null) {
             mJenkinsUsername.setText(mSettingsPresenter.getJenkinsUsername());
+            if(mSettingsPresenter.getJenkinsUsername() !=null) {
+                mJenkinsUsername.setSummary(getString(R.string.jenkins_username_summary,
+                        mSettingsPresenter.getJenkinsUsername()));
+            }
+        }
+
+        if (mJenkinsApiToken != null) {
+            mJenkinsApiToken.setText(mSettingsPresenter.getJenkinsApiToken());
+            if(mSettingsPresenter.getJenkinsApiToken() !=null) {
+                mJenkinsApiToken.setSummary(getString(R.string.settings_jenkins_token_summary,
+                        mSettingsPresenter.getJenkinsApiToken()));
+            }
         }
 
         if (mJenkinsBaseUrl != null) {
             mJenkinsBaseUrl.setText(mSettingsPresenter.getJenkinsBaseUrl());
-            mJenkinsBaseUrl.setSummary(getString(R.string.settings_jenkins_base_url_summary,
-                    mSettingsPresenter.getJenkinsBaseUrl()));
+            if (mSettingsPresenter.getJenkinsBaseUrl() != null) {
+                mJenkinsBaseUrl.setSummary(getString(R.string.settings_jenkins_base_url_summary,
+                        mSettingsPresenter.getJenkinsBaseUrl()
+                ));
+            }
         }
 
         if (gcmTokenPref != null) {
-            gcmTokenPref.setSummary(
-                    getString(R.string.gcm_token_summary, mSettingsPresenter.getGcmToken()));
+            if(mSettingsPresenter.getGcmToken() != null) {
+                gcmTokenPref.setSummary(
+                        getString(R.string.gcm_token_summary, mSettingsPresenter.getGcmToken()));
+            }
         }
 
         if (mAbout != null) {

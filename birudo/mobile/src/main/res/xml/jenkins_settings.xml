@@ -6,14 +6,12 @@
     <PreferenceCategory android:title="@string/jenkins_server_configuration">
         <EditTextPreference
                 android:key="jenkins_base_url"
-                android:summary="@string/settings_jenkins_base_url_summary"
                 android:title="@string/setting_jenkins_base_url"/>
         <EditTextPreference
                 android:key="jenkins_username"
                 android:title="@string/settings_jenkins_username"/>
         <EditTextPreference
                 android:dependency="jenkins_username"
-
                 android:key="jenkins_token"
                 android:title="@string/settings_jenkins_token"/>
     </PreferenceCategory>
@@ -26,7 +24,6 @@
                 android:title="@string/gcm_sender_id"/>
         <Preference
                 android:dependency="gcm_sender_id"
-                android:summary="@string/gcm_token_summary"
                 android:key="gcm_token"
                 android:title="@string/gcm_token"/>
     </PreferenceCategory>

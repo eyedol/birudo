@@ -79,7 +79,6 @@ public class RetrieveJenkinsBuildInfo {
     @Inject
     public RetrieveJenkinsBuildInfo(Context context) {
         mContext = context;
-
         mJenkinsBuildInfoModelMapper = new JenkinsBuildInfoJsonModelMapper();
     }
 

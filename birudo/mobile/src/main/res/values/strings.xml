@@ -44,7 +44,7 @@
     <string name="settings_jenkins_token">Jenkins API Token</string>
     <string name="settings_jenkins_token_summary">API Token: %1$s</string>
     <string name="setting_jenkins_base_url">Base URL</string>
-    <string name="settings_jenkins_base_url_summary">Connecting to Jenkins @ %1$s.</string>
+    <string name="settings_jenkins_base_url_summary">Connecting to Jenkins @ %1$s</string>
     <string name="gcm_error">Error obtaining a GCM token: %1$s.</string>
     <string name="new_token">Got new GCM token</string>
     <string name="deregistering_failed">De-registering from Jenkins failed: %1$s.</string>

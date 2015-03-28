@@ -101,7 +101,7 @@ public class SettingsActivity extends BaseActivity implements ListJenkinsBuildIn
 
     @Override
     public void showMessage(String message) {
-        Snackbar.with(getApplicationContext()).text(message).show(this);
+        Snackbar.with(getApplicationContext()).text(message).textColorResource(R.color.console_text_color).show(this);
     }
 
 }
